@@ -1,4 +1,4 @@
-# ims-report
+# clock-out
 
 ## Project setup
 ```
