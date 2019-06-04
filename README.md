@@ -1,5 +1,11 @@
 # clock-out
 
+## 技术包括 node+express+mysql+vue+element-ui
+[用vue-cli3创建项目架构，相应配置查看官网](https://cli.vuejs.org/zh/guide/creating-a-project.html)
+
+```
+vue create clock-out
+```
 ## Project setup
 ```
 yarn install
