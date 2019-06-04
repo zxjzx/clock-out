@@ -7,8 +7,6 @@ const app = express()
 const path = require('path')
 let bodyParser = require('body-parser')
 
-//数据库
-const db = require('./mysql/db')
 
 app.set('views', path.join(__dirname, 'views'))
 app.use(bodyParser.json())
@@ -25,23 +23,11 @@ app.use('*', (req, res, next) => {
   }
 })
 
-app.use('/getme', (req, res) => {
-  res.send('im a girl')
-})
 
-//以下是连接数据库的操作
-app.use('/getDBList', function (req, res, next) {
-  db.query('SELECT * FROM user', function (err, rows) {
-    res.send(rows)
-  })
-})
+//数据库
+const user = require('./mysql/user');
+app.use('/',user);
 
-app.use('/addUser', function (req, res, next) {
-  let sql2 = 'INSERT INTO user(username,password) VALUES (?,?)'
-  db.query(sql2, [req.body.username, req.body.password], function (err, rows) {
-    res.sendStatus(200)
-  })
-})
 
 const server = http.createServer(app)
 
