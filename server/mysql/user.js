@@ -15,12 +15,29 @@ router.use('/getme', (req, res) => {
 })
 
 router.use('/login', (req, res) => {
-  let sql = 'select * from user where username = ' + JSON.stringify(req.body.username) + ' and password = ' + JSON.stringify(req.body.password)
+  let sql = 'select username,role,nickname from user where username = ' + JSON.stringify(req.body.username) + ' and password = ' + JSON.stringify(req.body.password)
   db.query(sql, function (err, rows) {
     if (err) {
-      res.send(err)
+      res.send(err);
+      return
     } else {
-      res.send("login state")
+      if(rows.length){
+        let result = {
+          code:0,
+          message:'OK',
+          data:rows,
+          status:true
+        }
+        res.send(result)
+      }else{
+        let result = {
+          code:0,
+          message:'OK',
+          data:'用户名或密码错误',
+          status:false
+        }
+        res.send(result)
+      }
     }
   })
 })

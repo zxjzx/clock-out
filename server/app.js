@@ -5,12 +5,11 @@ const express = require('express')
 const app = express()
 
 const path = require('path')
-let bodyParser = require('body-parser')
-
+let bodyParser = require('body-parser')//对post请求的请求体进行解析
 
 app.set('views', path.join(__dirname, 'views'))
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }))//解析request中body的urlencoded字符
 
 app.use('*', (req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')
@@ -23,11 +22,9 @@ app.use('*', (req, res, next) => {
   }
 })
 
-
 //数据库
-const user = require('./mysql/user');
-app.use('/',user);
-
+const user = require('./mysql/user')
+app.use('/', user)
 
 const server = http.createServer(app)
 

@@ -95,21 +95,6 @@
         passwordType: 'password',
         capsTooltip: false,
         loading: false,
-        redirect: undefined,
-        otherQuery: {}
-      }
-    },
-    watch: {
-      $route: {
-        handler: function (route) {
-          const query = route.query;
-          console.log(query);
-          if (query) {
-            this.redirect = query.redirect
-            console.log(this.otherQuery)
-          }
-        },
-        immediate: true
       }
     },
     created () {
@@ -149,22 +134,27 @@
         })
       },
       handleLogin () {
-        console.log(this.loginForm)
-
         let obj = JSON.parse(JSON.stringify(this.loginForm))
-
         obj.password = MD5(obj.password)
         this.loading = true
         this.$http.post('/login', obj).then(res => {
-          console.log(res);
-          const TokenKey = 'Admin-Token'
-          Cookies.set(TokenKey,res);
-          this.loading = false;
-          this.$message.success("login success");
-          this.$router.replace('/main');
-        }).catch(()=>{
+          console.log(res)
           this.loading = false
-        });
+          if (res.code === 0 && res.status) {
+            const TokenKey = 'Admin-Token'
+            let [{ username }] = res.data
+            Cookies.set(TokenKey, username)
+            this.$message.success('login success')
+            this.$router.replace('/main')
+          } else if (res.code === 0 && !res.status) {
+            this.$message.error(res.data)
+          } else {
+            this.$message.error(res.sqlMessage)
+          }
+
+        }).catch(() => {
+          this.loading = false
+        })
       },
     }
   }
