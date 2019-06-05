@@ -7,14 +7,16 @@ import './assets/css/index.scss'
 
 // element
 import ElementUI from 'element-ui'
+import locale from 'element-ui/lib/locale/lang/en'
 import 'element-ui/lib/theme-chalk/index.css'
 
-Vue.use(ElementUI)
+Vue.use(ElementUI, { locale, size: 'small', zIndex: 3000 })
 
 import store from './store'
 import Http from './utils/http'
-
+import TimeFormat from './utils/tool';
 Vue.prototype.$http = Http
+Vue.prototype.$timeFormat = TimeFormat
 
 Vue.config.productionTip = false
 

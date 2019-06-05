@@ -1,13 +1,28 @@
 <template>
   <div>
-    <div id="nav">
-      <router-link to="/main">Home</router-link>
-      |
-      <router-link to="/main/about">About</router-link>
-      |
-      <el-button @click.prevent="logout">logout</el-button>
+
+    <el-menu router
+             :default-active="activeIndex"
+             class="el-menu-demo"
+             mode="horizontal"
+             @select="handleSelect"
+             background-color="#545c64"
+             text-color="#fff"
+             active-text-color="#ffd04b">
+      <el-menu-item index="/main">Home</el-menu-item>
+      <el-menu-item index="/main/about">About</el-menu-item>
+      <el-menu-item index="/main/clock-out">Clock Out</el-menu-item>
+      <el-submenu index="/setting">
+        <template slot="title">Setting</template>
+        <el-menu-item index="/main/project-setting">Project Setting</el-menu-item>
+        <el-menu-item index="/main/user-info-setting">User Info Setting</el-menu-item>
+      </el-submenu>
+      <el-menu-item @click.native="logout" style="float: right">Log Out</el-menu-item>
+    </el-menu>
+
+    <div style="margin: 24px;">
+      <router-view/>
     </div>
-    <router-view/>
   </div>
 </template>
 
@@ -16,11 +31,26 @@
 
   export default {
     name: 'Main',
+    data () {
+      return {
+        activeIndex: '/main',
+      }
+    },
     methods: {
+      handleSelect (key, keyPath) {
+        console.log(key, keyPath)
+      },
       logout () {
-        const remove = removeToken()
-        console.log(remove);
-        this.$router.replace('/')
+        this.$confirm('Confirm Log Out ?')
+          .then(() => {
+            this.$store.dispatch('removeStorage');
+            const remove = removeToken()
+            console.log(remove)
+            this.$router.replace('/')
+          })
+          .catch(_ => {
+          })
+
       }
     }
   }

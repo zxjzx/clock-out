@@ -98,6 +98,7 @@
       }
     },
     created () {
+      console.log(this.$store.state);
       // window.addEventListener('storage', this.afterQRScan)
     },
     mounted () {
@@ -136,16 +137,21 @@
       handleLogin () {
         let obj = JSON.parse(JSON.stringify(this.loginForm))
         obj.password = MD5(obj.password)
-        this.loading = true
+        this.loading = true;
+
         this.$http.post('/login', obj).then(res => {
           console.log(res)
           this.loading = false
           if (res.code === 0 && res.status) {
             const TokenKey = 'Admin-Token'
-            let [{ username }] = res.data
+            let [{ username,id }] = res.data
             Cookies.set(TokenKey, username)
             this.$message.success('login success')
-            this.$router.replace('/main')
+            //获取用户信息存储到全局变量中
+            this.$store.dispatch('getUserInfo',id);
+
+            this.$router.replace('/main');
+            // window.location.reload();
           } else if (res.code === 0 && !res.status) {
             this.$message.error(res.data)
           } else {

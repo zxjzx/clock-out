@@ -14,27 +14,39 @@ router.use('/getme', (req, res) => {
   res.send('im a girl')
 })
 
-router.use('/login', (req, res) => {
-  let sql = 'select username,role,nickname from user where username = ' + JSON.stringify(req.body.username) + ' and password = ' + JSON.stringify(req.body.password)
-  db.query(sql, function (err, rows) {
-    if (err) {
+router.use('/getUserInfo/:id',(req,res)=>{
+  let sql = 'select id,username,role,nickname from user where id = '+req.params.id;
+  db.query(sql,(err,rows)=>{
+    if(err){
       res.send(err);
       return
+    }else{
+      res.send(rows)
+    }
+  })
+})
+
+router.use('/login', (req, res) => {
+  let sql = 'select id,username,role,nickname from user where username = ' + JSON.stringify(req.body.username) + ' and password = ' + JSON.stringify(req.body.password)
+  db.query(sql, function (err, rows) {
+    if (err) {
+      res.send(err)
+      return
     } else {
-      if(rows.length){
+      if (rows.length) {
         let result = {
-          code:0,
-          message:'OK',
-          data:rows,
-          status:true
+          code: 0,
+          message: 'OK',
+          data: rows,
+          status: true
         }
         res.send(result)
-      }else{
+      } else {
         let result = {
-          code:0,
-          message:'OK',
-          data:'用户名或密码错误',
-          status:false
+          code: 0,
+          message: 'OK',
+          data: '用户名或密码错误',
+          status: false
         }
         res.send(result)
       }
