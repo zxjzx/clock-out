@@ -24,7 +24,11 @@ app.use('*', (req, res, next) => {
 
 //数据库
 const user = require('./mysql/user')
+const setting = require('./mysql/setting')
+const clockOut = require('./mysql/clock-out')
 app.use('/', user)
+app.use('/', setting)
+app.use('/', clockOut)
 
 const server = http.createServer(app)
 

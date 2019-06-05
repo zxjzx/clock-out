@@ -6,6 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
+    "pm2-app": "pm2 start ./server/app.js",
     "app": "node ./server/app.js"
   },
   "dependencies": {
