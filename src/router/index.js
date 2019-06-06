@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Main from '../components/Main'
 import Login from '../views/Login.vue'
-import {getToken,removeToken} from '../utils/auth'
+import { getToken, removeToken } from '../utils/auth'
 
 Vue.use(Router)
 
@@ -47,15 +47,31 @@ const router = new Router({
           // route level code-splitting
           // this generates a separate chunk (about.[hash].js) for this route
           // which is lazy-loaded when the route is visited.
-          component: () => import(/* webpackChunkName: "about" */ '../views/project-setting')
-        },,
+          component: () => import(/* webpackChunkName: "about" */ '../views/setting/project-setting')
+        },
         {
-          path: 'user-info-setting',
-          name: 'user-info-setting',
+          path: 'user-setting',
+          name: 'user-setting',
           // route level code-splitting
           // this generates a separate chunk (about.[hash].js) for this route
           // which is lazy-loaded when the route is visited.
-          component: () => import(/* webpackChunkName: "about" */ '../views/user-info-setting')
+          component: () => import(/* webpackChunkName: "about" */ '../views/setting/user-setting')
+        },
+        {
+          path: 'user-add-setting',
+          name: 'user-add-setting',
+          // route level code-splitting
+          // this generates a separate chunk (about.[hash].js) for this route
+          // which is lazy-loaded when the route is visited.
+          component: () => import(/* webpackChunkName: "about" */ '../views/setting/user-add')
+        },
+        {
+          path: 'user-edit-setting/:id',
+          name: 'user-edit-setting',
+          // route level code-splitting
+          // this generates a separate chunk (about.[hash].js) for this route
+          // which is lazy-loaded when the route is visited.
+          component: () => import(/* webpackChunkName: "about" */ '../views/setting/user-edit')
         },
       ]
     },
@@ -65,7 +81,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   // const hasTaken = false
-  const hasTaken = getToken();
+  const hasTaken = getToken()
   // console.log(hasTaken)
   if (to.path === '/') {
     next({ path: '/login' })

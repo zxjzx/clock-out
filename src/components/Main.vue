@@ -15,7 +15,7 @@
       <el-submenu index="/setting">
         <template slot="title">Setting</template>
         <el-menu-item index="/main/project-setting">Project Setting</el-menu-item>
-        <el-menu-item index="/main/user-info-setting">User Info Setting</el-menu-item>
+        <el-menu-item index="/main/user-setting">User Info Setting</el-menu-item>
       </el-submenu>
       <el-menu-item @click.native="logout" style="float: right">Log Out</el-menu-item>
     </el-menu>

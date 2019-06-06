@@ -14,20 +14,21 @@ router.use('/getme', (req, res) => {
   res.send('im a girl')
 })
 
-router.use('/getUserInfo/:id',(req,res)=>{
-  let sql = 'select id,username,role,nickname from user where id = '+req.params.id;
-  db.query(sql,(err,rows)=>{
-    if(err){
-      res.send(err);
+router.use('/getUserInfo/:id', (req, res) => {
+  let sql = 'select id,username,role,nickname from user where id = ' + req.params.id
+  db.query(sql, (err, rows) => {
+    if (err) {
+      res.send(err)
       return
-    }else{
+    } else {
       res.send(rows)
     }
   })
 })
 
 router.use('/login', (req, res) => {
-  let sql = 'select id,username,role,nickname from user where username = ' + JSON.stringify(req.body.username) + ' and password = ' + JSON.stringify(req.body.password)
+  let password = JSON.stringify(md5(req.body.password))
+  let sql = 'select id,username,role,nickname from user where username = ' + JSON.stringify(req.body.username) + ' and password = ' + password
   db.query(sql, function (err, rows) {
     if (err) {
       res.send(err)
@@ -55,10 +56,74 @@ router.use('/login', (req, res) => {
 })
 
 router.use('/addUser', function (req, res, next) {
-  let password = md5(req.body.password)
-  let sql2 = 'INSERT INTO user(username,password) VALUES (' + req.body.username + ',' + password + ')'
-  db.query(sql2, function (err, rows) {
-    res.sendStatus(200)
+  let password = JSON.stringify(md5(req.body.password))
+  let sql = 'INSERT INTO user(username,password,nickname,role,default_projectid) VALUES (' + req.body.username + ',' + password + ',' + req.body.nickname + ',' + req.body.role + ',' + req.body.projectId + ')'
+  db.query(sql, function (err, rows) {
+    if (err) {
+      res.send(err)
+    } else {
+      let result = {
+        code: 0,
+        message: 'OK',
+        data: rows,
+        status: true
+      }
+      res.send(result)
+    }
+
+  })
+})
+
+router.use('/deleteUser', function (req, res, next) {
+  let userId = req.body.userId
+  let sql = 'DELETE FROM user WHERE id = ' + userId
+  db.query(sql, function (err, rows) {
+    if (err) {
+      res.send(err)
+    } else {
+      let result = {
+        code: 0,
+        message: 'OK',
+        data: rows,
+        status: true
+      }
+      res.send(result)
+    }
+
+  })
+})
+
+router.use('/getUserList', function (req, res, next) {
+  let sql = 'select * from user'
+  db.query(sql, function (err, rows) {
+    if (err) {
+      res.send(err)
+    } else {
+      let result = {
+        code: 0,
+        message: 'OK',
+        data: rows,
+        status: true
+      }
+      res.send(result)
+    }
+  })
+})
+
+router.use('/updateUserList', function (req, res, next) {
+  let sql = 'UPDATE user SET username=' + req.body.username + ',nickname=' + req.body.nickname + ',role=' + req.body.role + ',default_projectid=' + req.body.projectId + ' WHERE id = ' + req.body.id
+  db.query(sql, function (err, rows) {
+    if (err) {
+      res.send(err)
+    } else {
+      let result = {
+        code: 0,
+        message: 'OK',
+        data: rows,
+        status: true
+      }
+      res.send(result)
+    }
   })
 })
 
