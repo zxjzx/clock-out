@@ -15,13 +15,43 @@ router.use('/getme', (req, res) => {
 })
 
 router.use('/getUserInfo/:id', (req, res) => {
-  let sql = 'select id,username,role,nickname from user where id = ' + req.params.id
+  // let sql = 'select id,username,role,nickname from user where id = ' + req.params.id
+  let sql = 'select u.id,u.username,u.role,u.nickname,u.default_projectid as projectId,p.name as projectName\
+  from user u\
+  left join project p on p.id = u.default_projectid\
+  where u.id = ' + req.params.id
   db.query(sql, (err, rows) => {
     if (err) {
       res.send(err)
       return
     } else {
-      res.send(rows)
+      let result = {
+        code: 0,
+        message: 'OK',
+        data: rows,
+        status: true
+      }
+      res.send(result)
+    }
+  })
+})
+
+router.use('/updateUserInfo', (req, res) => {
+  let obj = req.body
+  let password = JSON.stringify(md5(obj.password))
+  let sql = 'UPDATE user SET username=' + obj.username + ',nickname=' + obj.nickname + ',password=' + password + ',role=' + obj.role + ',default_projectid=' + obj.projectId + ' WHERE id =' + obj.id
+  db.query(sql, (err, rows) => {
+    if (err) {
+      res.send(err)
+      return
+    } else {
+      let result = {
+        code: 0,
+        message: 'OK',
+        data: rows,
+        status: true
+      }
+      res.send(result)
     }
   })
 })
@@ -94,7 +124,9 @@ router.use('/deleteUser', function (req, res, next) {
 })
 
 router.use('/getUserList', function (req, res, next) {
-  let sql = 'select * from user'
+  let sql = 'select u.id,u.username,u.nickname,u.role,p.id as projectId,p.name as projectName,p.description,p.managerid\
+  from user u\
+  left join project p on u.default_projectid = p.id'
   db.query(sql, function (err, rows) {
     if (err) {
       res.send(err)

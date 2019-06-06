@@ -12,6 +12,7 @@
       <el-menu-item index="/main">Home</el-menu-item>
       <el-menu-item index="/main/about">About</el-menu-item>
       <el-menu-item index="/main/clock-out">Clock Out</el-menu-item>
+      <el-menu-item index="/main/tipoff-record">Tipoff Record</el-menu-item>
       <el-submenu index="/setting">
         <template slot="title">Setting</template>
         <el-menu-item index="/main/project-setting">Project Setting</el-menu-item>
@@ -27,7 +28,7 @@
 </template>
 
 <script>
-  import { getToken, removeToken } from '../utils/auth'
+  import {removeToken } from '../utils/auth'
 
   export default {
     name: 'Main',
@@ -35,6 +36,9 @@
       return {
         activeIndex: '/main',
       }
+    },
+    created(){
+      console.log(this.$store.state);
     },
     methods: {
       handleSelect (key, keyPath) {

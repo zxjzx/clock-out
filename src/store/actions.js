@@ -1,27 +1,29 @@
-import Cookies from 'js-cookie'
 import axios from 'axios'
 
-export default {
-
-  getUserInfo ({ commit }, obj) {
-    console.log(obj)
-
-    console.log(this)
-
+const userinfo = function (obj) {
+  return new Promise((resolve => {
     axios.post('/getUserInfo/' + obj).then(res => {
       console.log(res)
-      if (res.statusText === 'OK') {
-        console.log(res.data[0])
-        // commit('USERINFO', res.data[0])
+      if (res.status) {
         localStorage.setItem('userinfo', JSON.stringify(res.data[0]))
+        resolve(res.data)
       }
 
     }).catch((error) => {
       console.log(error)
     })
+  }))
+}
+
+export default {
+
+  getUserInfo ({ commit }, obj) {
+    userinfo(obj).then(res => {
+      commit('USERINFO', res.data[0])
+    })
 
   },
-  removeStorage(state){
+  removeStorage (state) {
     state.userinfo = null
     localStorage.removeItem('userinfo')
   }

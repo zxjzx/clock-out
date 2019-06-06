@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link :to="{name:'user-add-setting'}">Add user</router-link>
+    <router-link :to="{name:'user-add-setting'}"><i class="el-icon-circle-plus-outline"></i>Add user</router-link>
     <el-row>
       <el-col :span="16">
         <el-table
@@ -9,29 +9,25 @@
           <el-table-column
             type="index">
           </el-table-column>
-          <el-table-column
-            prop="nickname"
-            label="nickname">
-          </el-table-column>
-          <el-table-column
-            prop="password"
-            label="password"
-            width="180">
-          </el-table-column>
 
           <el-table-column
             prop="username"
             label="username">
           </el-table-column>
           <el-table-column
-            prop="default_projectid"
-            label="default_projectid">
+            prop="nickname"
+            label="nickname">
+          </el-table-column>
+
+          <el-table-column
+            prop="projectName"
+            label="project Name">
           </el-table-column>
 
           <el-table-column label="操作">
             <template slot-scope="scope">
-
               <router-link :to="{name:'user-edit-setting',params:{id:scope.row.id}}">Edit</router-link>
+              &nbsp;
               <el-button
                 @click.native.prevent="deleteRow(scope.row)"
                 type="text"
@@ -47,8 +43,6 @@
 </template>
 
 <script>
-  import md5 from 'md5'
-
   export default {
     name: 'user-setting',
     data () {

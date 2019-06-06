@@ -33,7 +33,7 @@
 
 <script>
   import ProjectSelect from '../../components/project-select'
-
+  import MD5 from 'md5'
   export default {
     name: 'user-add',
     components: { ProjectSelect },
@@ -54,7 +54,7 @@
         let { username, password, nickname, role, projectId } = this.user
         let obj = {
           projectId: projectId,
-          password: md5(password),
+          password: MD5(password),
           username: JSON.stringify(username),
           nickname: JSON.stringify(nickname),
           role: JSON.stringify(role)

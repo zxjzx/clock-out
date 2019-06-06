@@ -7,9 +7,6 @@
 <script>
   export default {
     name: 'App',
-    created () {
-      this.$store.getters.getStorage
-    }
   }
 </script>
 <style lang="scss">
