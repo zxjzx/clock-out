@@ -24,7 +24,7 @@ router.use('/getClockRecordList', (req, res) => {
   let pageSize = req.body.pageSize
   let startSize = (currentPage - 1) * pageSize
   // 主键查询：let sql2 = 'SELECT * FROM clockout_record  WHERE id >= 1 LIMIT 10;';
-  let sql = 'select a.id,a.id outid,a.created,a.userid,b.username,b.nickname,b.role,a.projectid,c.name projectname,a.outtime from clockout_record a left join user b on a.userid = b.id left join project c on a.projectid = c.id limit ' + startSize + ',' + pageSize + ';'
+  let sql = 'select a.id,a.id outid,a.created,a.userid,b.username,b.nickname,b.role,a.projectid,c.name projectname,a.outtime from clockout_record a left join user b on a.userid = b.id left join project c on a.projectid = c.id order by a.created desc limit ' + startSize + ',' + pageSize + ';'
   let sqlCount = 'SELECT COUNT(*) as total FROM clockout_record'
   let sqlresult = sql + sqlCount
   db.query(sqlresult, (err, rows) => {
