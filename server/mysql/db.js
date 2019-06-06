@@ -1,14 +1,15 @@
 var mysql = require('mysql')
 var connection = mysql.createPool({
-  host: 'localhost',
+  host: 'localhost', //你的数据库地址
   user: 'root',
   password: '123456',
-  database: 'reports'
+  database: 'imscodb',
+  multipleStatements: true
 })
 
-function query (sql,params, callback) {
+function query (sql, callback) {
   connection.getConnection(function (err, connection) {
-    connection.query(sql,params, function (err, rows) {
+    connection.query(sql, function (err, rows) {
       callback(err, rows)
       connection.release()
     })
