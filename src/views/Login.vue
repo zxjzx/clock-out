@@ -150,7 +150,7 @@
             //获取用户信息存储到全局变量中
             this.$store.dispatch('getUserInfo',id);
 
-            this.$router.replace('/main');
+            this.$router.replace('/main/clock-out');
             // window.location.reload();
           } else if (res.code === 0 && !res.status) {
             this.$message.error(res.data)

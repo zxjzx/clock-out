@@ -9,8 +9,8 @@
              background-color="#545c64"
              text-color="#fff"
              active-text-color="#ffd04b">
-      <el-menu-item index="/main">Home</el-menu-item>
-      <el-menu-item index="/main/about">About</el-menu-item>
+<!--      <el-menu-item index="/main">Home</el-menu-item>-->
+<!--      <el-menu-item index="/main/about">About</el-menu-item>-->
       <el-menu-item index="/main/clock-out">Clock Out</el-menu-item>
       <el-menu-item index="/main/tipoff-record">Tipoff Record</el-menu-item>
       <el-submenu index="/setting">

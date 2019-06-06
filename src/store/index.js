@@ -9,7 +9,14 @@ const store = new Vuex.Store({
     locaScreen: true,
     timeRecords: [],
   },
-  getters: {},
+  getters: {
+    getStorage (state) {
+      if (!state.userinfo) {
+        state.userinfo = JSON.parse(localStorage.getItem('userinfo'))
+      }
+      return state.userinfo
+    }
+  },
   mutations: {
     USERINFO (state, data) {
       state.userinfo = data

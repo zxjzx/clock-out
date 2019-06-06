@@ -22,8 +22,7 @@
         </el-table-column>
         <el-table-column
           prop="id"
-          label="ID"
-          width="180">
+          label="ID">
         </el-table-column>
         <el-table-column
           prop="projectname"
@@ -31,8 +30,7 @@
         </el-table-column>
         <el-table-column
           prop="outtimeFormat"
-          label="打卡时间"
-          width="180">
+          label="打卡时间">
         </el-table-column>
 
         <el-table-column
