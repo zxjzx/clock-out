@@ -3,7 +3,7 @@
     <el-option
       v-for="item in list"
       :key="item.id"
-      :label="item.name"
+      :label="item.username"
       :value="item.id">
     </el-option>
   </el-select>
@@ -11,7 +11,7 @@
 
 <script>
   export default {
-    name: 'project-select',
+    name: 'userlist-select',
     data () {
       return {
         list: [],
@@ -38,7 +38,7 @@
       },
       //获取project list
       getList () {
-        this.$http.get('getProjectList').then(res => {
+        this.$http.get('getUserList').then(res => {
           if (res.code === 0) {
             this.list = res.data
           }

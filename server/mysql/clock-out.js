@@ -23,9 +23,33 @@ router.use('/getClockRecordList', (req, res) => {
   let currentPage = req.body.currentPage
   let pageSize = req.body.pageSize
   let startSize = (currentPage - 1) * pageSize
-  // 主键查询：let sql2 = 'SELECT * FROM clockout_record  WHERE id >= 1 LIMIT 10;';
-  let sql = 'select a.id,a.id outid,a.created,a.userid,b.username,b.nickname,b.role,a.projectid,c.name projectname,a.outtime from clockout_record a left join user b on a.userid = b.id left join project c on a.projectid = c.id order by a.created desc limit ' + startSize + ',' + pageSize + ';'
-  let sqlCount = 'SELECT COUNT(*) as total FROM clockout_record'
+  let projectId = req.body.projectId
+  let userId = req.body.userId
+  let startTime = req.body.startTime
+  let endTime = req.body.endTime
+
+  let projectSql = 'where 1=1'
+  if (projectId) {
+    projectSql += ' and a.projectid = ' + projectId
+  }
+  if (userId) {
+    projectSql += ' and a.userid = ' + userId
+  }
+  if (startTime) {
+    projectSql += ' and a.outtime >= ' + startTime
+  }
+  if (endTime) {
+    projectSql += ' and a.outtime <= ' + endTime
+  }
+
+  let sql = 'select SQL_CALC_FOUND_ROWS \
+    a.id,a.id outid,a.created,a.userid,b.username,b.nickname,b.role,a.projectid,c.name projectname,a.outtime\
+    from clockout_record a \
+    left join user b on a.userid = b.id \
+    left join project c on a.projectid = c.id \
+    ' + projectSql + ' \
+    order by a.created desc limit ' + startSize + ',' + pageSize + ';'
+  let sqlCount = 'SELECT FOUND_ROWS() as total'
   let sqlresult = sql + sqlCount
   db.query(sqlresult, (err, rows) => {
     if (err) {

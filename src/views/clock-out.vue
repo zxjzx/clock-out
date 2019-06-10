@@ -1,19 +1,44 @@
 <template>
-  <el-row>
-    <el-col :span="12">
-      <el-form :label-position="labelPosition" label-suffix=" :" label-width="160px" :inline="true">
+  <div>
+    <el-row>
+      <el-col :span="12">
+        <el-form :label-position="labelPosition" label-suffix=" :" label-width="160px" :inline="true">
+          <el-form-item label="Project Name">
+            <project-select :value.sync="projectid"/>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit">打卡</el-button>
+          </el-form-item>
+        </el-form>
+      </el-col>
+    </el-row>
+    <hr style="height:1px;border:none;border-top:1px solid #cccccc;margin:10px;">
+    <el-row>
+      <el-form :label-position="labelPosition" label-suffix=" :" label-width="160px" :inline="true" :model="tableForm">
         <el-form-item label="Project Name">
-          <project-select :value.sync="projectid"/>
+          <project-select :value.sync="tableForm.projectId" @change="searchSubmit"/>
+        </el-form-item>
+        <el-form-item label="User Info">
+          <userlist-select :value.sync="tableForm.userId" @change="searchSubmit"/>
+        </el-form-item>
+        <el-form-item label="Time Range">
+          <el-date-picker
+            v-model="tableForm.time"
+            type="datetimerange"
+            range-separator="-"
+            start-placeholder="start date"
+            end-placeholder="end date"
+            align="right"
+            @change="searchSubmit">
+          </el-date-picker>
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" @click="onSubmit">打卡</el-button>
+          <el-button type="primary" @click="searchSubmit">search</el-button>
         </el-form-item>
       </el-form>
-
-    </el-col>
-
-    <el-col>
+    </el-row>
+    <el-row>
       <el-table
         :data="clockOutList"
         style="width: 100%">
@@ -57,21 +82,27 @@
         :page-size="page.pageSize"
         :total="page.total">
       </el-pagination>
-    </el-col>
-  </el-row>
+    </el-row>
+  </div>
+
 
 </template>
 
 <script>
   import ProjectSelect from '../components/project-select'
+  import UserlistSelect from '../components/userlist-select'
 
   export default {
     name: 'clock-out',
-    components: { ProjectSelect },
+    components: { ProjectSelect, UserlistSelect },
     data () {
       return {
         list: [],
-        projectid: null,
+        tableForm: {
+          projectId: null,
+          userId: null
+        },
+        projectid: this.$store.state.userinfo.projectId || null,
         labelPosition: 'right',
         clockOutList: [],
         page: {
@@ -82,14 +113,11 @@
       }
     },
     created () {
-      console.log(this.$store.state.userinfo)
       this.getList()
       this.getClockRecordList()
     },
     methods: {
       reportRow (item) {
-        console.log(item)
-
         let obj = {
           reporterid: this.$store.state.userinfo.id,
           outid: item.userid,
@@ -97,7 +125,6 @@
           created: JSON.stringify(this.$timeFormat(new Date()))
         }
         this.$http.post('reportSome', obj).then(res => {
-          console.log(res)
           if (res.status) {
             this.$message.success('operate success!')
           }
@@ -110,10 +137,18 @@
         this.getClockRecordList()
         console.log(`当前页: ${val}`)
       },
+      searchSubmit () {
+        // console.log(this.tableForm)
+        this.getClockRecordList()
+      },
       getClockRecordList () {
         let obj = {
           currentPage: this.page.currentPage,
-          pageSize: this.page.pageSize
+          pageSize: this.page.pageSize,
+          startTime: this.tableForm.time ? JSON.stringify(this.$timeFormat(this.tableForm.time[0])) : null,
+          endTime: this.tableForm.time ? JSON.stringify(this.$timeFormat(this.tableForm.time[1])) : null,
+          projectId: this.tableForm.projectId,
+          userId: this.tableForm.userId,
         }
         this.$http.post('getClockRecordList', obj).then(res => {
           let list = res.data.result.map(item => {
@@ -123,7 +158,6 @@
           })
 
           this.page.total = res.data.total
-          console.log(this.page.total)
           this.clockOutList = list
         })
       },
@@ -146,9 +180,7 @@
           outtime: nowTime,
           userid: this.$store.state.userinfo.id
         }
-        console.log(obj)
         this.$http.post('addClockRecord', obj).then(res => {
-          console.log(res)
           if (res.status) {
             this.projectid = null
             this.$message.success('operate success!')
