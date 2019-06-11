@@ -6,12 +6,11 @@
       <div v-if="$store.state.device==='mobile'&&$store.state.opened" class="drawer-bg" @click="handleClickOutside"/>
       <div class="main-container">
         <div class="fixed-header">
-          <header-bar/>
+          <header-bar />
         </div>
         <div class="m-t-50">
           <router-view/>
         </div>
-
       </div>
     </div>
   </div>
@@ -38,6 +37,9 @@
           this.$store.commit('closeSideBar')
         }
       }
+    },
+    created(){
+
     },
 
     computed: {

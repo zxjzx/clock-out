@@ -1,11 +1,25 @@
 <template>
   <div class="header-container">
-    <div @click="toggleMenu" class="toggle">
-      <i class="el-icon-s-fold font-20" v-if="$store.state.opened"></i>
-      <i class="el-icon-s-unfold font-20" v-else></i>
+    <div style="display: flex;justify-items: center">
+      <div @click="toggleMenu" class="toggle">
+        <i class="el-icon-s-fold font-20" v-if="$store.state.opened"></i>
+        <i class="el-icon-s-unfold font-20" v-else></i>
+      </div>
+
+      <div class="m-l-20">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item v-for="(item,index) in levelList" :key="item.path">
+            <span v-if="index==levelList.length-1">{{ item.meta.title }}</span>
+            <a v-else >{{ item.meta.title }}</a>
+          </el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
     </div>
+
+
+
     <div class="log-out">
-      <el-tooltip class="item" @click.native="logout"  effect="dark" content="Log Out" placement="bottom">
+      <el-tooltip class="item" @click.native="logout" effect="dark" content="Log Out" placement="bottom">
         <i class="el-icon-switch-button font-20"></i>
       </el-tooltip>
     </div>
@@ -17,7 +31,27 @@
 
   export default {
     name: 'header-bar',
+    data(){
+      return {
+        levelList:[]
+      }
+    },
+    watch:{
+      $route(){
+        this.getLevelList()
+      }
+    },
+    created() {
+      this.getLevelList()
+    },
+    mounted () {
+      console.log(this.levelList)
+    },
     methods: {
+      getLevelList(){
+        let matched = this.$route.matched.filter(item => item.meta);
+        this.levelList = matched
+      },
       toggleMenu () {
         this.$store.commit('toggleState')
       },
@@ -31,7 +65,6 @@
           })
           .catch(_ => {
           })
-
       }
     }
   }

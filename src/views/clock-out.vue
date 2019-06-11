@@ -135,7 +135,6 @@
       handleCurrentChange (val) {
         this.page.currentPage = val
         this.getClockRecordList()
-        console.log(`当前页: ${val}`)
       },
       searchSubmit () {
         // console.log(this.tableForm)

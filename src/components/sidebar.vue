@@ -17,11 +17,11 @@
             <i class="menu-icon el-icon-setting"></i>
             <span slot="title">Setting</span>
           </template>
-          <el-menu-item index="/main/project-setting">
+          <el-menu-item index="/main/setting/project-setting">
             <i class="el-icon-goods"></i>
             Project Setting
           </el-menu-item>
-          <el-menu-item index="/main/user-setting">
+          <el-menu-item index="/main/setting/user-list-setting">
             <i class="el-icon-user"></i>
             User Info Setting
           </el-menu-item>

@@ -97,10 +97,6 @@
         loading: false,
       }
     },
-    created () {
-      console.log(this.$store.state);
-      // window.addEventListener('storage', this.afterQRScan)
-    },
     mounted () {
       if (this.loginForm.username === '') {
         this.$refs.username.focus()
@@ -145,7 +141,7 @@
           if (res.code === 0 && res.status) {
             const TokenKey = 'Admin-Token'
             let [{ username,id }] = res.data
-            Cookies.set(TokenKey, username)
+            Cookies.set(TokenKey, username,{ expires: 7 })
             this.$message.success('login success')
             //获取用户信息存储到全局变量中
             this.$store.dispatch('getUserInfo',id);

@@ -60,9 +60,7 @@
           role: JSON.stringify(role)
         }
         this.$http.post('/addUser', obj).then(res => {
-          console.log(res)
           if (res.code === 0) {
-            console.log('success')
             this.$message.success('Add success !')
             this.user = {}
           } else {

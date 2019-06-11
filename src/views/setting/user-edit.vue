@@ -71,7 +71,7 @@
           if (res.code === 0) {
             console.log('success')
             this.$message.success('Add success !')
-            this.$router.replace('/main/user-setting');
+            this.$router.replace('/main/user-list-setting');
           } else {
             this.$message.error(res.sqlMessage)
           }
