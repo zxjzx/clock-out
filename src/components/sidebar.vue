@@ -1,12 +1,9 @@
 <template>
   <div>
     <el-scrollbar wrap-class="scrollbar-wrapper">
-      <el-menu router :default-active="defaultUrl" mode="vertical" :collapse="isCollapse" :collapse-transition="false" background-color="#304156"
+      <el-menu router :default-active="defaultUrl" mode="vertical" :collapse="isCollapse" :collapse-transition="false"
+               background-color="#304156"
                text-color="#bfcbd9" active-text-color="#409EFF">
-        <el-menu-item @click.native="logout">
-          <i class="el-icon-lock"></i>
-          <span slot="title">Log Out</span>
-        </el-menu-item>
         <el-menu-item index="/main/clock-out">
           <i class="el-icon-time"></i>
           <span slot="title">Clock Out</span>
@@ -35,8 +32,6 @@
 </template>
 
 <script>
-  import { removeToken } from '../utils/auth'
-  import { mapState } from 'vuex'
 
   export default {
     name: 'sidebar',
@@ -59,32 +54,14 @@
 
     },
     created () {
-      console.log(this.$store.state.sidebar)
-      console.log(this.sidebar)
+      // console.log(this.$store.state.sidebar)
+      // console.log(this.sidebar)
     },
     mounted () {
       let href = window.location.href
       this.defaultUrl = href.split('#')[1]
     },
     methods: {
-      handleOpen (key, keyPath) {
-        console.log(key, keyPath)
-      },
-      handleClose (key, keyPath) {
-        console.log(key, keyPath)
-      },
-      logout () {
-        this.$confirm('Confirm Log Out ?')
-          .then(() => {
-            this.$store.dispatch('removeStorage')
-            const remove = removeToken()
-            console.log(remove)
-            this.$router.replace('/')
-          })
-          .catch(_ => {
-          })
-
-      }
     }
   }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <el-select v-model="projectId" filterable clearable placeholder="choose one" @change="selectOption">
+  <el-select v-model="projectId" filterable clearable placeholder="Project" @change="selectOption">
     <el-option
       v-for="item in list"
       :key="item.id"

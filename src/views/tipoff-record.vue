@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row>
-      <el-form :label-position="labelPosition" label-suffix=" :" label-width="160px" :inline="true" :model="tableForm">
+      <el-form :label-position="labelPosition" label-suffix=" :" :inline="true" :model="tableForm">
         <el-form-item label="Reportee">
           <userlist-select :value.sync="tableForm.reportee" @change="searchSubmit"/>
         </el-form-item>
@@ -77,7 +77,7 @@
         tableForm: {},
         page: {
           currentPage: 1,
-          pageSize: 10,
+          pageSize: 20,
           total: 0
         }
       }

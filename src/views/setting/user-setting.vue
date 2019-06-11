@@ -1,6 +1,8 @@
 <template>
   <div>
-    <router-link :to="{name:'user-add-setting'}"><i class="el-icon-circle-plus-outline"></i>Add user</router-link>
+    <el-button type="primary"  icon="el-icon-circle-plus-outline" @click.native="toAddUser">
+      Add
+    </el-button>
     <el-row>
       <el-col :span="16">
         <el-table
@@ -73,6 +75,11 @@
           this.userList = res.data
         })
       },
+      toAddUser(){
+        this.$router.push({
+          name:'user-add-setting'
+        })
+      }
     }
   }
 </script>

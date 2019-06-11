@@ -14,7 +14,7 @@
     </el-row>
     <hr style="height:1px;border:none;border-top:1px solid #cccccc;margin:10px;">
     <el-row>
-      <el-form :label-position="labelPosition" label-suffix=" :" label-width="160px" :inline="true" :model="tableForm">
+      <el-form :label-position="labelPosition" label-suffix=" :" :inline="true" :model="tableForm">
         <el-form-item label="Project Name">
           <project-select :value.sync="tableForm.projectId" @change="searchSubmit"/>
         </el-form-item>
@@ -34,7 +34,8 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" @click="searchSubmit">search</el-button>
+          <el-button type="primary" @click="searchSubmit">Search</el-button>
+          <el-button @click="resetForm">Reset</el-button>
         </el-form-item>
       </el-form>
     </el-row>
@@ -46,30 +47,26 @@
           type="index">
         </el-table-column>
         <el-table-column
-          prop="id"
-          label="ID">
-        </el-table-column>
-        <el-table-column
           prop="projectname"
-          label="项目名称">
+          label="Project Name">
         </el-table-column>
         <el-table-column
           prop="outtimeFormat"
-          label="打卡时间">
+          label="Time">
         </el-table-column>
 
         <el-table-column
           prop="username"
-          label="打卡人">
+          label="User">
         </el-table-column>
 
-        <el-table-column label="操作">
+        <el-table-column label="Operate">
           <template slot-scope="scope">
             <el-button
               @click.native.prevent="reportRow(scope.row)"
               type="text"
               size="small">
-              举报
+              Report
             </el-button>
           </template>
         </el-table-column>
@@ -107,16 +104,19 @@
         clockOutList: [],
         page: {
           currentPage: 1,
-          pageSize: 10,
+          pageSize: 20,
           total: 0
         }
       }
     },
     created () {
-      this.getList()
       this.getClockRecordList()
     },
     methods: {
+      resetForm () {
+        this.tableForm = {}
+        this.getClockRecordList()
+      },
       reportRow (item) {
         let obj = {
           reporterid: this.$store.state.userinfo.id,
@@ -159,14 +159,6 @@
 
           this.page.total = res.data.total
           this.clockOutList = list
-        })
-      },
-      //获取project list
-      getList () {
-        this.$http.get('getProjectList').then(res => {
-          if (res.code === 0) {
-            this.list = res.data
-          }
         })
       },
       //打卡

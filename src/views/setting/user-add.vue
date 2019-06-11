@@ -20,7 +20,7 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">Add</el-button>
+            <el-button type="primary" @click="onSubmit">Save</el-button>
             <el-button @click="onCancel">Cancel</el-button>
             <el-button type="warning" @click.native.prevent="returnPage">Return</el-button>
           </el-form-item>

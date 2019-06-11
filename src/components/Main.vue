@@ -5,9 +5,13 @@
       <sidebar class="sidebar-container"></sidebar>
       <div v-if="$store.state.device==='mobile'&&$store.state.opened" class="drawer-bg" @click="handleClickOutside"/>
       <div class="main-container">
-        <div @click="toggleMenu" style="cursor: pointer"><i class="el-icon-s-operation" style="font-size: 16px"></i>
+        <div class="fixed-header">
+          <header-bar/>
         </div>
-        <router-view/>
+        <div class="m-t-50">
+          <router-view/>
+        </div>
+
       </div>
     </div>
   </div>
@@ -16,12 +20,13 @@
 <script>
 
   import sidebar from './sidebar'
+  import HeaderBar from './header-bar'
 
   const { body } = document
   const WIDTH = 992
   export default {
     name: 'Main',
-    components: { sidebar },
+    components: { sidebar, HeaderBar },
     data () {
       return {
         activeIndex: '/main',
@@ -55,10 +60,6 @@
       window.removeEventListener('resize', this.resizeHandle)
     },
     methods: {
-      toggleMenu () {
-        this.$store.commit('toggleState')
-      },
-
       getWidth () {
         const rect = body.getBoundingClientRect()
         return rect.width - 1 < WIDTH
@@ -78,7 +79,7 @@
 </script>
 
 <style lang="scss" scoped>
-
+  $sideBarWidth: 210px;
   .app-wrapper {
     &:after {
       content: "";
@@ -112,6 +113,19 @@
     height: 100%;
     position: absolute;
     z-index: 999;
+  }
+
+  .fixed-header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 9;
+    width: calc(100% - #{$sideBarWidth});
+    transition: width 0.28s;
+  }
+
+  .m-t-50 {
+    margin-top: 50px;
   }
 
 </style>
