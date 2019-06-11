@@ -68,9 +68,13 @@ const router = new Router({
   ]
 })
 
+import store from '../store/index'
 router.beforeEach((to, from, next) => {
   // const hasTaken = false
   const hasTaken = getToken()
+  let roles = {name:'admin'};
+  // store.dispatch('GenerateRoutes', { roles })
+
   // console.log(hasTaken)
   if (to.path === '/') {
     next({ path: '/login' })

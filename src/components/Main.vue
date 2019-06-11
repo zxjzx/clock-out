@@ -1,78 +1,117 @@
 <template>
   <div>
 
-    <el-menu router
-             :default-active="activeIndex"
-             class="el-menu-demo"
-             mode="horizontal"
-             @select="handleSelect"
-             background-color="#545c64"
-             text-color="#fff"
-             active-text-color="#ffd04b">
-<!--      <el-menu-item index="/main">Home</el-menu-item>-->
-<!--      <el-menu-item index="/main/about">About</el-menu-item>-->
-      <el-menu-item index="/main/clock-out">Clock Out</el-menu-item>
-      <el-menu-item index="/main/tipoff-record">Tipoff Record</el-menu-item>
-      <el-submenu index="/setting">
-        <template slot="title">Setting</template>
-        <el-menu-item index="/main/project-setting">Project Setting</el-menu-item>
-        <el-menu-item index="/main/user-setting">User Info Setting</el-menu-item>
-      </el-submenu>
-      <el-menu-item @click.native="logout" style="float: right">Log Out</el-menu-item>
-    </el-menu>
-
-    <div style="margin: 24px;">
-      <router-view/>
+    <div class="app-wrapper" :class="classObj">
+      <sidebar class="sidebar-container"></sidebar>
+      <div v-if="$store.state.device==='mobile'&&$store.state.opened" class="drawer-bg" @click="handleClickOutside"/>
+      <div class="main-container">
+        <div @click="toggleMenu" style="cursor: pointer"><i class="el-icon-s-operation" style="font-size: 16px"></i>
+        </div>
+        <router-view/>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-  import {removeToken } from '../utils/auth'
 
+  import sidebar from './sidebar'
+
+  const { body } = document
+  const WIDTH = 992
   export default {
     name: 'Main',
+    components: { sidebar },
     data () {
       return {
         activeIndex: '/main',
       }
     },
-    created(){
-      console.log(this.$store.state);
+    watch: {
+      $route (route) {
+        if (this.$store.state.device === 'mobile' && this.$store.state.opened) {
+          this.$store.commit('closeSideBar')
+        }
+      }
+    },
+
+    computed: {
+      classObj () {
+        return {
+          hideSidebar: !this.$store.state.opened,
+          openSidebar: this.$store.state.opened,
+          withoutAnimation: true,
+          mobile: this.$store.state.device === 'mobile'
+        }
+      }
+    },
+    beforeMount () {
+      window.addEventListener('resize', this.resizeHandle)
+    },
+    mounted () {
+      this.getWidth()
+    },
+    beforeDestroy () {
+      window.removeEventListener('resize', this.resizeHandle)
     },
     methods: {
-      handleSelect (key, keyPath) {
-        console.log(key, keyPath)
+      toggleMenu () {
+        this.$store.commit('toggleState')
       },
-      logout () {
-        this.$confirm('Confirm Log Out ?')
-          .then(() => {
-            this.$store.dispatch('removeStorage');
-            const remove = removeToken()
-            console.log(remove)
-            this.$router.replace('/')
-          })
-          .catch(_ => {
-          })
 
+      getWidth () {
+        const rect = body.getBoundingClientRect()
+        return rect.width - 1 < WIDTH
+      },
+      resizeHandle () {
+        const isMobile = this.getWidth()
+        this.$store.commit('toggleDevice', isMobile ? 'mobile' : 'desktop')
+        if (isMobile) {
+          this.$store.commit('closeSideBar')
+        }
+      },
+      handleClickOutside () {
+        this.$store.commit('closeSideBar')
       }
     }
   }
 </script>
 
-<style scoped>
-  #nav {
-    padding: 30px;
+<style lang="scss" scoped>
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+  .app-wrapper {
+    &:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
 
-  &
-  .router-link-exact-active {
-    color: #42b983;
+    position: relative;
+    height: 100%;
+    width: 100%;
+
+    &.mobile.openSidebar {
+      position: fixed;
+      top: 0;
+    }
   }
 
+  .hideSidebar .fixed-header {
+    width: calc(100% - 54px)
   }
+
+  .mobile .fixed-header {
+    width: 100%;
   }
+
+  .drawer-bg {
+    background: #000;
+    opacity: 0.3;
+    width: 100%;
+    top: 0;
+    height: 100%;
+    position: absolute;
+    z-index: 999;
+  }
+
 </style>

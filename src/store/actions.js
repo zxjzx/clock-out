@@ -25,5 +25,5 @@ export default {
   removeStorage (state) {
     state.userinfo = null
     localStorage.removeItem('userinfo')
-  }
+  },
 }

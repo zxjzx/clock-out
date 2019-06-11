@@ -10,6 +10,9 @@ import ElementUI from 'element-ui'
 import locale from 'element-ui/lib/locale/lang/en'
 import 'element-ui/lib/theme-chalk/index.css'
 
+
+import './styles/sidebar.scss';
+
 Vue.use(ElementUI, { locale, size: 'small', zIndex: 3000 })
 
 import store from './store'

@@ -8,6 +8,8 @@ const store = new Vuex.Store({
   state: {
     locaScreen: true,
     timeRecords: [],
+    opened: true,
+    device: 'desktop',
   },
   getters: {
     getStorage (state) {
@@ -21,6 +23,15 @@ const store = new Vuex.Store({
     USERINFO (state, data) {
       state.userinfo = data
     },
+    toggleState (state) {
+      state.opened = !state.opened
+    },
+    toggleDevice(state,data){
+      state.device = data
+    },
+    closeSideBar(state,data){
+      state.opened = false
+    }
   },
   actions
 })
