@@ -64,7 +64,7 @@
           <template slot-scope="scope">
             <el-button
               @click.native.prevent="reportRow(scope.row)"
-              type="text"
+              type="primary"
               size="small">
               Report
             </el-button>

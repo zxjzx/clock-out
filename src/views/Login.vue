@@ -141,12 +141,13 @@
           if (res.code === 0 && res.status) {
             const TokenKey = 'Admin-Token'
             let [{ username,id }] = res.data
-            Cookies.set(TokenKey, username,{ expires: 7 })
+            Cookies.set(TokenKey, username,{ expires: 1 })
             this.$message.success('login success')
             //获取用户信息存储到全局变量中
-            this.$store.dispatch('getUserInfo',id);
+            this.$store.dispatch('getUserInfo',id).then(res=>{
+              this.$router.replace('/main/clock-out');
+            });
 
-            this.$router.replace('/main/clock-out');
             // window.location.reload();
           } else if (res.code === 0 && !res.status) {
             this.$message.error(res.data)

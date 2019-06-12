@@ -1,5 +1,7 @@
 <template>
   <div>
+    <el-button type="warning" class="m-b-20" @click.native.prevent="returnPage">Return</el-button>
+
     <el-row>
       <el-col :span="12">
         <el-form :label-position="labelPosition" label-width="160px" :model="user">
@@ -21,7 +23,6 @@
 
           <el-form-item>
             <el-button type="primary" @click="onSubmit">Confirm</el-button>
-            <el-button type="warning" @click.native.prevent="returnPage">Return</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -71,7 +72,8 @@
           if (res.code === 0) {
             console.log('success')
             this.$message.success('Add success !')
-            this.$router.replace('/main/user-list-setting');
+            // this.$router.replace('/main/user-list-setting');
+            this.$router.back()
           } else {
             this.$message.error(res.sqlMessage)
           }

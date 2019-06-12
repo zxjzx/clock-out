@@ -36,7 +36,7 @@
           </el-table-column>
           <el-table-column
             prop="content"
-            label="content">
+            label="Content">
           </el-table-column>
           <el-table-column
             prop="outUsername"
@@ -48,7 +48,7 @@
           </el-table-column>
           <el-table-column
             prop="createdFormat"
-            label="created">
+            label="Created">
           </el-table-column>
         </el-table>
         <el-pagination

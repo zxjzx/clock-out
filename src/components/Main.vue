@@ -6,7 +6,7 @@
       <div v-if="$store.state.device==='mobile'&&$store.state.opened" class="drawer-bg" @click="handleClickOutside"/>
       <div class="main-container">
         <div class="fixed-header">
-          <header-bar />
+          <header-bar/>
         </div>
         <div class="m-t-50">
           <router-view/>
@@ -21,29 +21,29 @@
   import sidebar from './sidebar'
   import HeaderBar from './header-bar'
 
-  const { body } = document
-  const WIDTH = 992
+  const {body} = document;
+  const WIDTH = 992;
   export default {
     name: 'Main',
-    components: { sidebar, HeaderBar },
-    data () {
+    components: {sidebar, HeaderBar},
+    data() {
       return {
         activeIndex: '/main',
       }
     },
     watch: {
-      $route (route) {
+      $route(route) {
         if (this.$store.state.device === 'mobile' && this.$store.state.opened) {
           this.$store.commit('closeSideBar')
         }
       }
     },
-    created(){
+    created() {
 
     },
 
     computed: {
-      classObj () {
+      classObj() {
         return {
           hideSidebar: !this.$store.state.opened,
           openSidebar: this.$store.state.opened,
@@ -52,28 +52,40 @@
         }
       }
     },
-    beforeMount () {
-      window.addEventListener('resize', this.resizeHandle)
+    beforeMount() {
+      let flag = true;
+      window.addEventListener('resize', () => {
+        if (!flag) {
+          return
+        }
+        flag = false;
+        setTimeout(() => {
+          flag = true;
+          this.resizeHandle();
+        }, 500)
+
+      })
     },
-    mounted () {
+    mounted() {
       this.getWidth()
     },
-    beforeDestroy () {
+    beforeDestroy() {
       window.removeEventListener('resize', this.resizeHandle)
     },
     methods: {
-      getWidth () {
-        const rect = body.getBoundingClientRect()
+      getWidth() {
+        const rect = body.getBoundingClientRect();
+        console.log(rect.width);
         return rect.width - 1 < WIDTH
       },
-      resizeHandle () {
-        const isMobile = this.getWidth()
+      resizeHandle() {
+        const isMobile = this.getWidth();
         this.$store.commit('toggleDevice', isMobile ? 'mobile' : 'desktop')
         if (isMobile) {
           this.$store.commit('closeSideBar')
         }
       },
-      handleClickOutside () {
+      handleClickOutside() {
         this.$store.commit('closeSideBar')
       }
     }

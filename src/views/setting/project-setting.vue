@@ -5,10 +5,10 @@
       <el-col :span="12">
         <el-form :label-position="labelPosition" label-width="160px" :model="formLabelAlign">
           <el-form-item label="Project Name">
-            <el-input v-model="formLabelAlign.name"></el-input>
+            <el-input v-model="formLabelAlign.name" placeholder="Project Name"></el-input>
           </el-form-item>
           <el-form-item label="Description">
-            <el-input type="textarea" v-model="formLabelAlign.description"></el-input>
+            <el-input type="textarea" v-model="formLabelAlign.description" placeholder="Description"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSubmit">Add</el-button>

@@ -17,9 +17,12 @@ const userinfo = function (obj) {
 export default {
 
   getUserInfo ({ commit }, obj) {
-    userinfo(obj).then(res => {
-      commit('USERINFO', res)
-    })
+    return new Promise((resolve => {
+      userinfo(obj).then(res => {
+        commit('USERINFO', res);
+        resolve()
+      })
+    }))
 
   },
   removeStorage (state) {

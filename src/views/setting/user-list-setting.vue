@@ -1,38 +1,38 @@
 <template>
   <div>
-    <el-button type="primary"  icon="el-icon-circle-plus-outline" @click.native="toAddUser">
+    <el-button type="primary" class="m-b-20" icon="el-icon-circle-plus-outline" @click.native="toAddUser">
       Add
     </el-button>
     <el-row>
       <el-col :span="16">
         <el-table
           :data="userList"
-          style="width: 100%">
+          style="width: 100%" border>
           <el-table-column
             type="index">
           </el-table-column>
 
           <el-table-column
             prop="username"
-            label="username">
+            label="Username">
           </el-table-column>
           <el-table-column
             prop="nickname"
-            label="nickname">
+            label="Nickname">
           </el-table-column>
 
           <el-table-column
             prop="projectName"
-            label="project Name">
+            label="Project Name">
           </el-table-column>
 
-          <el-table-column label="操作">
+          <el-table-column label="Operate">
             <template slot-scope="scope">
-              <router-link :to="{name:'user-edit-setting',params:{id:scope.row.id}}">Edit</router-link>
+              <el-button type="primary" @click.native.prevent="toEditUser(scope.row)">Edit</el-button>
               &nbsp;
               <el-button
                 @click.native.prevent="deleteRow(scope.row)"
-                type="text"
+                type="danger"
                 size="small">
                 Delete
               </el-button>
@@ -47,20 +47,20 @@
 <script>
   export default {
     name: 'user-setting',
-    data () {
+    data() {
       return {
         userList: []
       }
     },
-    created () {
+    created() {
       this.getUserList()
     },
     methods: {
       //删除某一行
-      deleteRow (item) {
+      deleteRow(item) {
         let obj = {
           userId: item.id
-        }
+        };
         this.$http.post('deleteUser', obj).then(res => {
           if (res.code === 0) {
             this.$message.success('Delete success !')
@@ -69,17 +69,20 @@
           }
         })
       },
-      getUserList () {
+      getUserList() {
         this.$http.post('getUserList').then(res => {
           console.log(res)
           this.userList = res.data
         })
       },
-      toAddUser(){
+      toAddUser() {
         this.$router.push({
-          name:'user-add-setting'
+          name: 'user-add-setting'
         })
-      }
+      },
+      toEditUser(item) {
+        this.$router.push({name: 'user-edit-setting', params: {id: item.id}})
+      },
     }
   }
 </script>
