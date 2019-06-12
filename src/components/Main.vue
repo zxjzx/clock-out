@@ -9,7 +9,10 @@
           <header-bar/>
         </div>
         <div class="m-t-50">
-          <router-view/>
+          <tags-view/>
+          <div class="p-20">
+            <router-view/>
+          </div>
         </div>
       </div>
     </div>
@@ -20,12 +23,13 @@
 
   import sidebar from './side-bar'
   import HeaderBar from './header-bar'
+  import TagsView from './tags-view';
 
   const {body} = document;
   const WIDTH = 992;
   export default {
     name: 'Main',
-    components: {sidebar, HeaderBar},
+    components: {sidebar, HeaderBar, TagsView},
     data() {
       return {
         activeIndex: '/main',

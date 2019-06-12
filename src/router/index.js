@@ -49,7 +49,7 @@ const router = new Router({
             {
               path: 'user-list-setting',
               name: 'user-list-setting',
-              meta: { title: 'list'},
+              meta: { title: 'list user'},
               // route level code-splitting
               // this generates a separate chunk (about.[hash].js) for this route
               // which is lazy-loaded when the route is visited.
@@ -58,13 +58,13 @@ const router = new Router({
             {
               path: 'user-add-setting',
               name: 'user-add-setting',
-              meta: { title: 'add' },
+              meta: { title: 'add user' },
               component: () => import(/* webpackChunkName: "about" */ '../views/setting/user-add')
             },
             {
               path: 'user-edit-setting/:id',
               name: 'user-edit-setting',
-              meta: { title: 'edit' },
+              meta: { title: 'edit user' },
               component: () => import(/* webpackChunkName: "about" */ '../views/setting/user-edit')
             },
           ]

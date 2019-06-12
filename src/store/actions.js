@@ -16,7 +16,7 @@ const userinfo = function (obj) {
 
 export default {
 
-  getUserInfo ({ commit }, obj) {
+  getUserInfo({commit}, obj) {
     return new Promise((resolve => {
       userinfo(obj).then(res => {
         commit('USERINFO', res);
@@ -25,8 +25,14 @@ export default {
     }))
 
   },
-  removeStorage (state) {
+  removeStorage(state) {
     state.userinfo = null
     localStorage.removeItem('userinfo')
   },
+  deleteViewRoute({commit, state}, obj) {
+    return new Promise(resolve => {
+      commit('DELETEVIEW', obj);
+      resolve([...state.visitedViews])
+    })
+  }
 }

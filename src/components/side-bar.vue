@@ -45,7 +45,7 @@
     },
     watch: {
       $route(newValue) {
-        console.log(newValue.path)
+        // console.log(newValue.path)
         this.defaultUrl = newValue.path
       }
     },
