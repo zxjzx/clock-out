@@ -18,7 +18,7 @@
 
 <script>
 
-  import sidebar from './sidebar'
+  import sidebar from './side-bar'
   import HeaderBar from './header-bar'
 
   const {body} = document;
@@ -75,7 +75,7 @@
     methods: {
       getWidth() {
         const rect = body.getBoundingClientRect();
-        console.log(rect.width);
+        // console.log(rect.width);
         return rect.width - 1 < WIDTH
       },
       resizeHandle() {

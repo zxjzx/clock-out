@@ -12,10 +12,11 @@
           <i class="el-icon-alarm-clock"></i>
           <span slot="title">Tipoff Record</span>
         </el-menu-item>
+
         <el-submenu index="/setting">
           <template slot="title">
-            <i class="menu-icon el-icon-setting"></i>
-            <span slot="title">Setting</span>
+            <i class="el-icon-setting"></i>
+            <span>Setting</span>
           </template>
           <el-menu-item index="/main/setting/project-setting">
             <i class="el-icon-goods"></i>
@@ -35,34 +36,35 @@
 
   export default {
     name: 'sidebar',
-    data () {
+    data() {
       return {
         number: true,
-        defaultUrl: '/main/clock-out'
+        defaultUrl: '/main/clock-out',
+        routerList: []
       }
     },
     watch: {
-      $route (newValue) {
+      $route(newValue) {
         console.log(newValue.path)
         this.defaultUrl = newValue.path
       }
     },
     computed: {
-      isCollapse () {
+      isCollapse() {
         return !this.$store.state.opened
       }
 
     },
-    created () {
+    created() {
       // console.log(this.$store.state.sidebar)
-      // console.log(this.sidebar)
+      console.log(this.$router.options.routes[1])
+      this.routerList = this.$router.options.routes[1];
     },
-    mounted () {
+    mounted() {
       let href = window.location.href
       this.defaultUrl = href.split('#')[1]
     },
-    methods: {
-    }
+    methods: {}
   }
 </script>
 

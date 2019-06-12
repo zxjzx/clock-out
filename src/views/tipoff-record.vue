@@ -13,8 +13,8 @@
             v-model="tableForm.time"
             type="datetimerange"
             range-separator="-"
-            start-placeholder="start date"
-            end-placeholder="end date"
+            start-placeholder="Start Date"
+            end-placeholder="End Date"
             align="right"
             @change="searchSubmit">
           </el-date-picker>

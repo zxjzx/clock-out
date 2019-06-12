@@ -63,7 +63,8 @@
         };
         this.$http.post('deleteUser', obj).then(res => {
           if (res.code === 0) {
-            this.$message.success('Delete success !')
+            this.$message.success('Delete success !');
+            this.getUserList();
           } else {
             this.$message.error(res.sqlMessage)
           }

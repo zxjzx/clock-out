@@ -1,9 +1,8 @@
 <template>
   <div>
-
     <el-row>
       <el-col :span="12">
-        <el-form :label-position="labelPosition" label-width="160px" :model="formLabelAlign">
+        <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
           <el-form-item label="Project Name">
             <el-input v-model="formLabelAlign.name" placeholder="Project Name"></el-input>
           </el-form-item>

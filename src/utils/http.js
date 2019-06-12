@@ -23,7 +23,7 @@ export default {
       }).catch((error) => {
         reject(error)
       }).finally((final) => {
-        console.log(final)
+        // console.log(final)
       })
     })
   },

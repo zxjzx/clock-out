@@ -1,12 +1,12 @@
-$menuText:#bfcbd9;
-$menuActiveText:#409EFF;
-$subMenuActiveText:#f4f4f5; // https://github.com/ElemeFE/element/issues/12951
+$menuText: #bfcbd9;
+$menuActiveText: #409EFF;
+$subMenuActiveText: #f4f4f5; // https://github.com/ElemeFE/element/issues/12951
 
-$menuBg:#304156;
-$menuHover:#263445;
+$menuBg: #304156;
+$menuHover: #263445;
 
-$subMenuBg:#1f2d3d;
-$subMenuHover:#001528;
+$subMenuBg: #1f2d3d;
+$subMenuHover: #001528;
 
 $sideBarWidth: 210px;
 #app {
@@ -64,16 +64,13 @@ $sideBarWidth: 210px;
       &:hover {
         background-color: $menuHover !important;
       }
-      .menu-icon {
-        margin-right: 16px;
-      }
     }
 
-    .is-active>.el-submenu__title {
+    .is-active > .el-submenu__title {
       color: $subMenuActiveText !important;
     }
 
-    & .nest-menu .el-submenu>.el-submenu__title,
+    & .nest-menu .el-submenu > .el-submenu__title,
     & .el-submenu .el-menu-item {
       min-width: $sideBarWidth !important;
       background-color: $subMenuBg !important;
@@ -99,22 +96,14 @@ $sideBarWidth: 210px;
 
       .el-tooltip {
         padding: 0 !important;
-
-        .menu-icon {
-          margin-left: 20px;
-        }
       }
     }
 
     .el-submenu {
       overflow: hidden;
 
-      &>.el-submenu__title {
-        padding: 0 !important;
-
-        .menu-icon {
-          margin-left: 20px;
-        }
+      & > .el-submenu__title {
+        //padding: 0 !important;
 
         .el-submenu__icon-arrow {
           display: none;
@@ -124,8 +113,8 @@ $sideBarWidth: 210px;
 
     .el-menu--collapse {
       .el-submenu {
-        &>.el-submenu__title {
-          &>span {
+        & > .el-submenu__title {
+          & > span {
             height: 0;
             width: 0;
             overflow: hidden;
@@ -172,13 +161,10 @@ $sideBarWidth: 210px;
 
 // when menu collapsed
 .el-menu--vertical {
-  &>.el-menu {
-    .menu-icon {
-      margin-right: 16px;
-    }
+  & > .el-menu {
   }
 
-  .nest-menu .el-submenu>.el-submenu__title,
+  .nest-menu .el-submenu > .el-submenu__title,
   .el-menu-item {
     &:hover {
       // you can use $subMenuHover
@@ -187,7 +173,7 @@ $sideBarWidth: 210px;
   }
 
   // the scroll bar appears when the subMenu is too long
-  >.el-menu--popup {
+  > .el-menu--popup {
     max-height: 100vh;
     overflow-y: auto;
 

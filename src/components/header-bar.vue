@@ -45,7 +45,6 @@
       this.getLevelList()
     },
     mounted () {
-      console.log(this.levelList)
     },
     methods: {
       getLevelList(){

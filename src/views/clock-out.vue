@@ -12,7 +12,7 @@
         </el-form>
       </el-col>
     </el-row>
-    <hr style="height:1px;border:none;border-top:1px solid #cccccc;margin:10px;">
+    <hr>
     <el-row>
       <el-form :label-position="labelPosition" label-suffix=" :" :inline="true" :model="tableForm">
         <el-form-item label="Project Name">
@@ -26,8 +26,8 @@
             v-model="tableForm.time"
             type="datetimerange"
             range-separator="-"
-            start-placeholder="start date"
-            end-placeholder="end date"
+            start-placeholder="Start Date"
+            end-placeholder="End Date"
             align="right"
             @change="searchSubmit">
           </el-date-picker>
@@ -91,8 +91,8 @@
 
   export default {
     name: 'clock-out',
-    components: { ProjectSelect, UserlistSelect },
-    data () {
+    components: {ProjectSelect, UserlistSelect},
+    data() {
       return {
         list: [],
         tableForm: {
@@ -109,15 +109,15 @@
         }
       }
     },
-    created () {
+    created() {
       this.getClockRecordList()
     },
     methods: {
-      resetForm () {
+      resetForm() {
         this.tableForm = {}
         this.getClockRecordList()
       },
-      reportRow (item) {
+      reportRow(item) {
         let obj = {
           reporterid: this.$store.state.userinfo.id,
           outid: item.userid,
@@ -132,15 +132,15 @@
       },
 
       //分页查询打卡记录
-      handleCurrentChange (val) {
+      handleCurrentChange(val) {
         this.page.currentPage = val
         this.getClockRecordList()
       },
-      searchSubmit () {
+      searchSubmit() {
         // console.log(this.tableForm)
         this.getClockRecordList()
       },
-      getClockRecordList () {
+      getClockRecordList() {
         let obj = {
           currentPage: this.page.currentPage,
           pageSize: this.page.pageSize,
@@ -161,7 +161,7 @@
         })
       },
       //打卡
-      onSubmit () {
+      onSubmit() {
 
         //获取当前标准时间
         let nowTime = JSON.stringify(this.$timeFormat(new Date()))

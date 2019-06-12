@@ -12,7 +12,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 
 
 import './styles/sidebar.scss';
-import './styles/dev.css';
+import './styles/dev.scss';
 
 Vue.use(ElementUI, { locale, size: 'small', zIndex: 3000 })
 

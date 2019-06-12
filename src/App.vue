@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="ev-scrollbar">
     <router-view/>
   </div>
 </template>
@@ -23,6 +23,10 @@
 
   #app, html, body {
     height: 100%;
+  }
+  #app{
+    overflow-x: auto;
+    overflow-y: auto;
   }
 
 </style>

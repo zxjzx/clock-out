@@ -1,5 +1,6 @@
 <template>
   <div>
+    <el-button type="warning" class="m-b-20" @click.native.prevent="returnPage">Return</el-button>
     <el-row>
       <el-col :span="12">
         <el-form :label-position="labelPosition" label-width="160px" :model="user">
@@ -22,7 +23,7 @@
           <el-form-item>
             <el-button type="primary" @click="onSubmit">Save</el-button>
             <el-button @click="onCancel">Cancel</el-button>
-            <el-button type="warning" @click.native.prevent="returnPage">Return</el-button>
+
           </el-form-item>
         </el-form>
       </el-col>
