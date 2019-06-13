@@ -26,7 +26,7 @@
   import TagsView from './tags-view';
 
   const {body} = document;
-  const WIDTH = 992;
+  const WIDTH = 750;
   export default {
     name: 'Main',
     components: {sidebar, HeaderBar, TagsView},

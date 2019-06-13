@@ -57,17 +57,23 @@
     methods: {
       //删除某一行
       deleteRow(item) {
-        let obj = {
-          userId: item.id
-        };
-        this.$http.post('deleteUser', obj).then(res => {
-          if (res.code === 0) {
-            this.$message.success('Delete success !');
-            this.getUserList();
-          } else {
-            this.$message.error(res.sqlMessage)
-          }
-        })
+
+        this.$confirm('Confirm Delete this data ?')
+          .then(() => {
+            let obj = {userId: item.id};
+            this.$http.post('deleteUser', obj).then(res => {
+              if (res.code === 0) {
+                this.$message.success('Delete success !');
+                this.getUserList();
+              } else {
+                this.$message.error(res.sqlMessage)
+              }
+            })
+          })
+          .catch(_ => {
+          });
+
+
       },
       getUserList() {
         this.$http.post('getUserList').then(res => {

@@ -11,7 +11,7 @@
           <el-form-item label="Username" required>
             <el-input type="text" v-model="user.username" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="Reset password">
+          <el-form-item label="Reset password" required>
             <el-input type="password" v-model="user.password" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="Nick Name">
@@ -50,7 +50,7 @@
       getUserById () {
         this.$http.post('getUserInfo/' + this.$route.params.id).then(res => {
           console.log(res)
-          this.user = res.data[0]
+          this.user = JSON.parse(JSON.stringify(res.data[0]))
         })
       },
       returnPage () {
@@ -61,10 +61,10 @@
         let obj = {
           id: this.$route.params.id,
           projectId: projectId,
-          password: md5(password),
-          username: JSON.stringify(username),
-          nickname: JSON.stringify(nickname),
-          role: JSON.stringify(role)
+          password: password?md5(password):null,
+          username: username,
+          nickname: nickname,
+          role: role
         }
         console.log(obj)
         this.$http.post('/updateUserInfo', obj).then(res => {

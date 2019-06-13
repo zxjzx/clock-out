@@ -7,10 +7,10 @@
           <el-form-item label="Project Name">
             <project-select :value.sync="user.projectId"/>
           </el-form-item>
-          <el-form-item label="Username">
+          <el-form-item label="Username" required>
             <el-input type="text" v-model="user.username" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="Password">
+          <el-form-item label="Password" required>
             <el-input type="password" v-model="user.password" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="Nick Name">
@@ -22,8 +22,6 @@
 
           <el-form-item>
             <el-button type="primary" @click="onSubmit">Save</el-button>
-            <el-button @click="onCancel">Cancel</el-button>
-
           </el-form-item>
         </el-form>
       </el-col>
@@ -35,10 +33,11 @@
 <script>
   import ProjectSelect from '../../components/project-select'
   import MD5 from 'md5'
+
   export default {
     name: 'user-add',
-    components: { ProjectSelect },
-    data () {
+    components: {ProjectSelect},
+    data() {
       return {
         labelPosition: 'right',
         user: {
@@ -48,17 +47,17 @@
       }
     },
     methods: {
-      returnPage () {
+      returnPage() {
         this.$router.back()
       },
-      onSubmit () {
-        let { username, password, nickname, role, projectId } = this.user
+      onSubmit() {
+        let {username, password, nickname, role, projectId} = this.user
         let obj = {
           projectId: projectId,
-          password: MD5(password),
-          username: JSON.stringify(username),
-          nickname: JSON.stringify(nickname),
-          role: JSON.stringify(role)
+          password: password ? MD5(password) : null,
+          username: username,
+          nickname: nickname,
+          role: role
         }
         this.$http.post('/addUser', obj).then(res => {
           if (res.code === 0) {
@@ -69,9 +68,6 @@
           }
         })
       },
-      onCancel () {
-        this.user = {}
-      }
     }
   }
 </script>

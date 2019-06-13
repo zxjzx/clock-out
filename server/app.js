@@ -31,11 +31,6 @@ app.use('/', user)
 app.use('/', setting)
 app.use('/', clockOut)
 app.use('/', tipOff)
-/*app.use((err,req,res,next)=>{
-  res.status(500).json({
-    error:err.message
-  })
-})*/
 
 /*app.get('*', (req, res) => {
   // res.send("错误的get请求")
