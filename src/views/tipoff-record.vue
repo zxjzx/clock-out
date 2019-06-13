@@ -66,7 +66,7 @@
 
 <script>
   import UserlistSelect from '../components/userlist-select'
-
+  import Utils from '../utils/ev-utils'
   export default {
     name: 'tipoff-record',
     components: { UserlistSelect },
@@ -74,7 +74,9 @@
       return {
         dataList: [],
         labelPosition: 'right',
-        tableForm: {},
+        tableForm: {
+          time: [new Date(Utils.getTodayDate()), new Date()]
+        },
         page: {
           currentPage: 1,
           pageSize: 20,
@@ -108,7 +110,9 @@
         })
       },
       resetForm () {
-        this.tableForm = {}
+        this.tableForm = {
+          time: [new Date(Utils.getTodayDate()), new Date()]
+        }
         this.searchSubmit()
       },
       //分页查询打卡记录

@@ -42,7 +42,7 @@ const store = new Vuex.Store({
       let pinString = "";
       if (evUtils.isNotEmpty(params)) {
         for (let i in params) {
-          console.log(params[i])
+          // console.log(params[i])
           pinString += ' - ' + params[i]
         }
       }

@@ -29,7 +29,6 @@
           <el-table-column label="Operate">
             <template slot-scope="scope">
               <el-button type="primary" @click.native.prevent="toEditUser(scope.row)">Edit</el-button>
-              &nbsp;
               <el-button
                 @click.native.prevent="deleteRow(scope.row)"
                 type="danger"

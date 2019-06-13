@@ -88,6 +88,7 @@
 <script>
   import ProjectSelect from '../components/project-select'
   import UserlistSelect from '../components/userlist-select'
+  import Utils from '../utils/ev-utils'
 
   export default {
     name: 'clock-out',
@@ -97,11 +98,13 @@
         list: [],
         tableForm: {
           projectId: null,
-          userId: null
+          userId: null,
+          time: [new Date(Utils.getTodayDate()), new Date()]
         },
         projectid: this.$store.state.userinfo.projectId || null,
         labelPosition: 'right',
         clockOutList: [],
+
         page: {
           currentPage: 1,
           pageSize: 20,
@@ -114,7 +117,9 @@
     },
     methods: {
       resetForm() {
-        this.tableForm = {}
+        this.tableForm = {
+          time: [new Date(Utils.getTodayDate()), new Date()]
+        };
         this.getClockRecordList()
       },
       reportRow(item) {
@@ -170,12 +175,15 @@
           create: nowTime,
           outtime: nowTime,
           userid: this.$store.state.userinfo.id
-        }
+        };
         this.$http.post('addClockRecord', obj).then(res => {
           if (res.status) {
             this.projectid = null
             this.$message.success('operate success!')
           }
+          this.tableForm = {
+            time: [new Date(Utils.getTodayDate()), new Date()]
+          };
           this.getClockRecordList()
         })
       }

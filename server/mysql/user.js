@@ -57,7 +57,7 @@ router.use('/updateUserInfo', (req, res) => {
 })
 
 router.use('/login', (req, res) => {
-  let password = JSON.stringify(md5(req.body.password))
+  let password = JSON.stringify(md5(req.body.password));
   let sql = 'select id,username,role,nickname from user where username = ' + JSON.stringify(req.body.username) + ' and password = ' + password
   db.query(sql, function (err, rows) {
     if (err) {

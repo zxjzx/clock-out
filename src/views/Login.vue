@@ -4,7 +4,7 @@
              label-position="left">
 
       <div class="title-container">
-        <h3 class="title">Clock Out System</h3>
+        <h3 class="title">Clock Out System test</h3>
       </div>
 
       <el-form-item prop="username">
@@ -141,7 +141,7 @@
           if (res.code === 0 && res.status) {
             const TokenKey = 'Admin-Token'
             let [{ username,id }] = res.data
-            Cookies.set(TokenKey, username,{ expires: 1 })
+            Cookies.set(TokenKey, username,{ expires: 0.1 })
             this.$message.success('login success')
             //获取用户信息存储到全局变量中
             this.$store.dispatch('getUserInfo',id).then(res=>{

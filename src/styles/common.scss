@@ -4,6 +4,7 @@ hr {
   border-top: 1px solid rgba(0, 21, 41, .08);
   margin: 20px auto;
 }
+
 .focusing {
   outline: none;
 }
@@ -11,10 +12,12 @@ hr {
 .p-10 {
   padding: 10px;
 }
+
 .p-20 {
   padding: 20px;
 }
-.m-t-10{
+
+.m-t-10 {
   margin-top: 10px;
 }
 
@@ -36,8 +39,7 @@ hr {
 }
 
 
-
-.m-t-0{
+.m-t-0 {
   margin-top: 0px;
 }
 
@@ -46,4 +48,17 @@ hr {
   padding: 20px;
 }
 
+.el-button + .el-button {
+  //margin-right: 10px;
+  margin-left: 0px;
+  //margin-top: 5px;
+}
+.el-button{
+  margin:1px 10px 1px 0px;
+  min-width: 60px;
+}
+
+.el-form-item{
+  margin-bottom: 10px!important;
+}
 

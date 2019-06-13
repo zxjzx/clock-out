@@ -9,7 +9,7 @@
           <header-bar/>
         </div>
         <div class="m-t-50">
-          <tags-view/>
+<!--          <tags-view/>-->
           <div class="p-20">
             <router-view/>
           </div>
