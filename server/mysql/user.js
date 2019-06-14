@@ -4,6 +4,20 @@ const md5 = require('md5')
 const db = require('./db.js')
 const Utils = require('../utils/index')
 
+
+router.use('/isLogin', (req, res) => {
+  if (req.session.login) {
+    res.send("已经登录成功")
+  } else {
+    res.send("未登录")
+  }
+})
+
+router.use('/logout', (req, res) => {
+  req.session.destroy()
+  res.send("注销成功")
+})
+
 //以下是连接数据库的操作
 router.use('/getDBList', function (req, res, next) {
   db.query('SELECT * FROM user', function (err, rows) {
@@ -79,6 +93,7 @@ router.use('/login', (req, res) => {
           data: rows,
           status: true
         };
+        req.session.login = true;
         res.send(result)
       } else {
         let result = {

@@ -39,6 +39,9 @@
       }
     },
     created() {
+      this.$http.get('/isLogin').then(res=>{
+        console.log(res);
+      });
       this.replaceUrl()
     },
 

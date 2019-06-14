@@ -97,6 +97,11 @@
         loading: false,
       }
     },
+    created(){
+      this.$http.get('/isLogin').then(res=>{
+        console.log(res);
+      });
+    },
     mounted() {
       if (this.loginForm.username === '') {
         this.$refs.username.focus()
