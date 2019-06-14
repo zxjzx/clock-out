@@ -1,10 +1,10 @@
 <template>
-  <div>level3 4444444444444444444444444444444444444444444</div>
+  <div>level test 页面</div>
 </template>
 
 <script>
   export default {
-    name: "level3-test"
+    name: "level-test"
   }
 </script>
 

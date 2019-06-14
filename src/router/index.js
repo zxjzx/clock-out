@@ -78,7 +78,49 @@ const router = new Router({
               component: () => import(/* webpackChunkName: "about" */ '../views/setting/user-edit')
             },
           ]
-        }
+        },
+        {
+          path: 'level-1',
+          name: 'level-1',
+          meta: {title: 'level-1'},
+          component: Layout,
+          children: [
+            {
+              path: 'level-2-1',
+              name: 'level-2-1',
+              meta: {title: 'level-2-1'},
+              component: () => import('../views/level-test'),
+            },
+            {
+              path: 'level-2-2',
+              name: 'level-2-2',
+              meta: {title: 'level-2-2'},
+              component: Layout,
+              children: [
+                {
+                  path: 'level-3-1',
+                  name: 'level-3-1',
+                  meta: {title: 'level-3-1'},
+                  component: () => import('../views/level-test'),
+                },
+                {
+                  path: 'level-3-2',
+                  name: 'level-3-2',
+                  meta: {title: 'level-3-2'},
+                  component: () => import('../views/level-test'),
+                  children: [
+                    {
+                      path: 'level-4',
+                      name: 'level-4',
+                      meta: {title: 'level-4'},
+                      component: () => import('../views/level-test'),
+                    }
+                  ]
+                }
+              ]
+            },
+          ]
+        },
 
       ]
     },
