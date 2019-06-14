@@ -9,7 +9,7 @@
           <header-bar/>
         </div>
         <div class="m-t-50">
-<!--          <tags-view/>-->
+          <!--          <tags-view/>-->
           <div class="p-20">
             <router-view/>
           </div>
@@ -30,20 +30,16 @@
   export default {
     name: 'Main',
     components: {sidebar, HeaderBar, TagsView},
-    data() {
-      return {
-        activeIndex: '/main',
-      }
-    },
     watch: {
-      $route(route) {
+      $route() {
+        this.replaceUrl();
         if (this.$store.state.device === 'mobile' && this.$store.state.opened) {
           this.$store.commit('closeSideBar')
         }
       }
     },
     created() {
-
+      this.replaceUrl()
     },
 
     computed: {
@@ -91,6 +87,11 @@
       },
       handleClickOutside() {
         this.$store.commit('closeSideBar')
+      },
+      replaceUrl() {
+        if (this.$route.name === 'main') {
+          this.$router.replace({name: 'clock-out'})
+        }
       }
     }
   }

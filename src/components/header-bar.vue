@@ -10,15 +10,14 @@
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item v-for="(item,index) in levelList" :key="item.path">
             <span v-if="index==levelList.length-1">{{ item.meta.title }}</span>
-            <a v-else >{{ item.meta.title }}</a>
+            <a v-else>{{ item.meta.title }}</a>
           </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
     </div>
 
-
-
     <div class="log-out">
+      <el-tag class="m-r-10">{{$store.state.userinfo.username}}</el-tag>
       <el-tooltip class="item" @click.native="logout" effect="dark" content="Log Out" placement="bottom">
         <i class="el-icon-switch-button font-20"></i>
       </el-tooltip>
@@ -27,34 +26,34 @@
 </template>
 
 <script>
-  import { removeToken } from '../utils/auth'
+  import {removeToken} from '../utils/auth'
 
   export default {
     name: 'header-bar',
-    data(){
+    data() {
       return {
-        levelList:[]
+        levelList: []
       }
     },
-    watch:{
-      $route(){
+    watch: {
+      $route() {
         this.getLevelList()
       }
     },
     created() {
       this.getLevelList()
     },
-    mounted () {
+    mounted() {
     },
     methods: {
-      getLevelList(){
+      getLevelList() {
         let matched = this.$route.matched.filter(item => item.meta);
         this.levelList = matched
       },
-      toggleMenu () {
+      toggleMenu() {
         this.$store.commit('toggleState')
       },
-      logout () {
+      logout() {
         this.$confirm('Confirm Log Out ?')
           .then(() => {
             this.$store.dispatch('removeStorage')

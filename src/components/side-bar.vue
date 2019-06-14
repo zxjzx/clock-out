@@ -4,29 +4,25 @@
       <el-menu router :default-active="$route.path" mode="vertical" :collapse="isCollapse" :collapse-transition="false"
                background-color="#304156"
                text-color="#bfcbd9" active-text-color="#409EFF">
-        <el-menu-item index="/main/clock-out">
-          <i class="el-icon-time"></i>
-          <span slot="title">Clock Out</span>
-        </el-menu-item>
-        <el-menu-item index="/main/tipoff-record" v-if="isAdmin">
-          <i class="el-icon-alarm-clock"></i>
-          <span slot="title">Tipoff Record</span>
-        </el-menu-item>
+        <div v-for="(item,index) in routerList" :key="index">
+          <el-menu-item :index="headerUrl+item.path" v-if="!item.children && isAdminShow(item.meta)">
+            <i :class="item.meta.icon"></i>
+            <span slot="title">{{item.name}}</span>
+          </el-menu-item>
 
-        <el-submenu index="/setting">
-          <template slot="title">
-            <i class="el-icon-setting"></i>
-            <span>Setting</span>
-          </template>
-          <el-menu-item index="/main/setting/project-setting">
-            <i class="el-icon-goods"></i>
-            Project Setting
-          </el-menu-item>
-          <el-menu-item index="/main/setting/user-list-setting">
-            <i class="el-icon-user"></i>
-            User Info Setting
-          </el-menu-item>
-        </el-submenu>
+          <el-submenu :index="headerUrl+item.path"
+                      v-if="item.children && item.children.length && isAdminShow(item.meta)">
+            <template slot="title">
+              <i :class="item.meta.icon"></i>
+              <span>{{item.name}}</span>
+            </template>
+            <el-menu-item :index="headerUrl+item.path+'/'+p.path" v-for="(p,pIndex) in item.children" :key="pIndex"
+                          v-if="!p.hidden">
+              <i :class="p.meta.icon"></i>
+              {{p.name}}
+            </el-menu-item>
+          </el-submenu>
+        </div>
       </el-menu>
     </el-scrollbar>
   </div>
@@ -40,7 +36,8 @@
       return {
         number: true,
         routerList: [],
-        isAdmin: this.$store.state.userinfo.role === 'admin'
+        isAdmin: this.$store.state.userinfo.role === 'admin',
+        headerUrl: '/main/'
       }
     },
     watch: {},
@@ -53,8 +50,17 @@
       let routes = this.$router.options.routes;
       let result = routes.filter(item => item.name == 'main');
       let routerList = result[0].children;
+      console.log(routerList);
+      this.routerList = routerList
     },
-    methods: {}
+    methods: {
+      isAdminShow(meta) {
+        if (meta.role && this.$store.state.userinfo.role !== meta.role) {
+          return false
+        }
+        return true
+      }
+    }
   }
 </script>
 

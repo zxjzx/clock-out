@@ -30,7 +30,7 @@ const router = new Router({
         {
           path: 'clock-out',
           name: 'clock-out',
-          meta: {title: 'clock-out'},
+          meta: {title: 'clock-out', icon: 'el-icon-time'},
           // route level code-splitting
           // this generates a separate chunk (about.[hash].js) for this route
           // which is lazy-loaded when the route is visited.
@@ -39,25 +39,25 @@ const router = new Router({
         {
           path: 'tipoff-record',
           name: 'tipoff-record',
-          meta: {title: 'tipoff-record', role: 'admin'},
+          meta: {title: 'tipoff-record', icon: 'el-icon-alarm-clock', role: 'admin'},
           component: () => import(/* webpackChunkName: "about" */ '../views/tipoff-record')
         },
         {
           path: 'setting',
           name: 'setting',
           component: Layout,
-          meta: {title: 'setting'},
+          meta: {title: 'setting', icon: 'el-icon-setting'},
           children: [
             {
               path: 'project-setting',
               name: 'project-setting',
-              meta: {title: 'project'},
+              meta: {title: 'project', icon: 'el-icon-goods'},
               component: () => import(/* webpackChunkName: "about" */ '../views/setting/project-setting')
             },
             {
               path: 'user-list-setting',
               name: 'user-list-setting',
-              meta: {title: 'list user'},
+              meta: {title: 'list user', icon: 'el-icon-user'},
               // route level code-splitting
               // this generates a separate chunk (about.[hash].js) for this route
               // which is lazy-loaded when the route is visited.
@@ -67,12 +67,14 @@ const router = new Router({
               path: 'user-add-setting',
               name: 'user-add-setting',
               meta: {title: 'add user'},
+              hidden: true,
               component: () => import(/* webpackChunkName: "about" */ '../views/setting/user-add')
             },
             {
               path: 'user-edit-setting/:id',
               name: 'user-edit-setting',
               meta: {title: 'edit user'},
+              hidden: true,
               component: () => import(/* webpackChunkName: "about" */ '../views/setting/user-edit')
             },
           ]
@@ -88,16 +90,15 @@ import store from '../store/index'
 
 router.beforeEach((to, from, next) => {
   const hasTaken = getToken();
-
   if (to.path === '/') {
     next({path: '/login'})
   } else if (to.path === '/login' && hasTaken) {
     next('/main')
   } else if (to.path !== '/login' && !hasTaken) {
     next('/login')
-  } else if (to.meta.role === 'admin') {
-    let isStaff = store.state.userinfo.role === 'admin' ? false : true;
-    if (isStaff) {
+  } else if (to.meta.role === 'admin' && store && store.state && store.state.userinfo) {
+    let isAdmin = store.state.userinfo.role === 'admin';
+    if (!isAdmin) {
       next('/no-permission')
     } else {
       next()

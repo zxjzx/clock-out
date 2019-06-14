@@ -24,7 +24,7 @@
     name: "no-permission",
     methods: {
       back() {
-        this.$router.go(-2)
+        this.$router.go(-2);
       }
     }
   }
