@@ -97,10 +97,8 @@
           startTime: this.tableForm.time ? JSON.stringify(this.$timeFormat(this.tableForm.time[0])) : null,
           endTime: this.tableForm.time ? JSON.stringify(this.$timeFormat(this.tableForm.time[1])) : null,
         }
-        console.log(this.tableForm)
 
         this.$http.post('getTipoffList', obj).then(res => {
-          console.log(res.data)
           this.dataList = res.data.result.map(item => {
             item.createdFormat = this.$timeFormat(new Date(item.created))
             return item

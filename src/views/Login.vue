@@ -67,7 +67,7 @@
 
   export default {
     name: 'Login',
-    data () {
+    data() {
       const validateUsername = (rule, value, callback) => {
         return
         if (!validUsername(value)) {
@@ -89,26 +89,26 @@
           password: '111111'
         },
         loginRules: {
-          username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-          password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+          username: [{required: true, trigger: 'blur', validator: validateUsername}],
+          password: [{required: true, trigger: 'blur', validator: validatePassword}]
         },
         passwordType: 'password',
         capsTooltip: false,
         loading: false,
       }
     },
-    mounted () {
+    mounted() {
       if (this.loginForm.username === '') {
         this.$refs.username.focus()
       } else if (this.loginForm.password === '') {
         this.$refs.password.focus()
       }
     },
-    destroyed () {
+    destroyed() {
       // window.removeEventListener('storage', this.afterQRScan)
     },
     methods: {
-      checkCapslock ({ shiftKey, key } = {}) {
+      checkCapslock({shiftKey, key} = {}) {
         if (key && key.length === 1) {
           if (shiftKey && (key >= 'a' && key <= 'z') || !shiftKey && (key >= 'A' && key <= 'Z')) {
             this.capsTooltip = true
@@ -120,7 +120,7 @@
           this.capsTooltip = false
         }
       },
-      showPwd () {
+      showPwd() {
         if (this.passwordType === 'password') {
           this.passwordType = ''
         } else {
@@ -130,21 +130,21 @@
           this.$refs.password.focus()
         })
       },
-      handleLogin () {
-        let obj = JSON.parse(JSON.stringify(this.loginForm))
-        obj.password = MD5(obj.password)
+      handleLogin() {
+        let obj = JSON.parse(JSON.stringify(this.loginForm));
+        obj.password = MD5(obj.password);
         this.loading = true;
 
         this.$http.post('/login', obj).then(res => {
           console.log(res)
           this.loading = false
           if (res.code === 0 && res.status) {
-            const TokenKey = 'Admin-Token'
-            let [{ username,id }] = res.data
-            Cookies.set(TokenKey, username,{ expires: 0.1 })
-            this.$message.success('login success')
+            const TokenKey = 'Admin-Token';
+            let [{username, id}] = res.data;
+            Cookies.set(TokenKey, username, {expires: 0.1});
+            this.$message.success('login success');
             //获取用户信息存储到全局变量中
-            this.$store.dispatch('getUserInfo',id).then(res=>{
+            this.$store.dispatch('getUserInfo', id).then(res => {
               this.$router.replace('/main/clock-out');
             });
 

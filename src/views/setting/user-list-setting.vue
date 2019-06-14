@@ -77,7 +77,6 @@
       },
       getUserList() {
         this.$http.post('getUserList').then(res => {
-          console.log(res)
           this.userList = res.data
         })
       },

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button type="warning" class="m-b-20" @click.native.prevent="returnPage">Return</el-button>
+    <el-button type="primary" icon="el-icon-back" class="m-b-20" @click.native.prevent="returnPage">Return</el-button>
     <el-row>
       <el-col :span="12">
         <el-form :label-position="labelPosition" label-width="160px" :model="user">

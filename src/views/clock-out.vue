@@ -97,7 +97,7 @@
       return {
         list: [],
         tableForm: {
-          projectId: null,
+          projectId: this.$store.state.userinfo.projectId || null,
           userId: null,
           time: [new Date(Utils.getTodayDate()), new Date()]
         },
@@ -123,17 +123,38 @@
         this.getClockRecordList()
       },
       reportRow(item) {
-        let obj = {
-          reporterid: this.$store.state.userinfo.id,
-          outid: item.userid,
-          content: null,
-          created: JSON.stringify(this.$timeFormat(new Date()))
-        }
-        this.$http.post('reportSome', obj).then(res => {
-          if (res.status) {
-            this.$message.success('operate success!')
-          }
-        })
+        let h = this.$createElement;
+        let user = this.$store.state.userinfo;
+        this.$prompt(
+          h('p', null, [
+            h('span', null, 'Are you sure report '),
+            h('strong', {style: 'color: #409EFF'}, ` ${user.username} ?`),
+          ]),
+          'title', {
+            confirmButtonText: 'Confirm',
+            cancelButtonText: 'Cancel',
+            inputPlaceholder: 'Report reason'
+          }).then(({value}) => {
+          let obj = {
+            reporterid: user.id,
+            outid: item.userid,
+            content: JSON.stringify(value),
+            created: JSON.stringify(this.$timeFormat(new Date()))
+          };
+          this.$http.post('reportSome', obj).then(res => {
+            if (res.status) {
+              this.$message.success('operate success!')
+            }
+          })
+
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Cancel input'
+          });
+        });
+
+
       },
 
       //分页查询打卡记录
