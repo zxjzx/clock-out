@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 // Set config defaults when creating the instance
-axios.defaults.baseURL = '/api'
+axios.defaults.baseURL = 'http://127.0.0.1:3000'
 
 export default {
   get (url, param) {
