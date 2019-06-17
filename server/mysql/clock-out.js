@@ -88,4 +88,23 @@ router.use('/reportSome', (req, res) => {
   })
 })
 
+router.use('/deleteReport', (req, res) => {
+  let obj = req.body;
+  let sql = 'DELETE FROM clockout_record WHERE id = ' + obj.id;
+  db.query(sql, function (err, rows) {
+    if (err) {
+      res.send(err)
+    } else {
+      let result = {
+        code: 0,
+        message: 'OK',
+        data: rows,
+        status: true
+      }
+      res.send(result)
+    }
+
+  })
+})
+
 module.exports = router

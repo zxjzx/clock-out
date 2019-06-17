@@ -68,6 +68,13 @@
               size="small">
               Report
             </el-button>
+            <el-button
+              v-if="isAdmin || scope.row.userid===userinfo.id"
+              @click.native.prevent="deleteReport(scope.row)"
+              type="danger"
+              size="small">
+              Delete
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -95,6 +102,8 @@
     components: {ProjectSelect, UserlistSelect},
     data() {
       return {
+        userinfo: this.$store.state.userinfo,
+        isAdmin: this.$store.state.userinfo.role === 'admin',
         list: [],
         tableForm: {
           projectId: this.$store.state.userinfo.projectId || null,
@@ -121,6 +130,22 @@
           time: [new Date(Utils.getTodayDate()), new Date()]
         };
         this.getClockRecordList()
+      },
+      deleteReport(item) {
+        this.$confirm('Confirm Delete Clock Out Record ?')
+          .then(() => {
+            let obj = {id: item.id};
+            this.$http.post('deleteReport', obj).then(res => {
+              if (res.status) {
+                this.$message.success('operate success!');
+                this.tableForm.time = [new Date(Utils.getTodayDate()), new Date()]
+                this.getClockRecordList()
+              }
+            })
+          })
+          .catch(_ => {
+          })
+
       },
       reportRow(item) {
         let h = this.$createElement;
@@ -187,7 +212,7 @@
       },
       //打卡
       onSubmit() {
-        if(!this.projectid){
+        if (!this.projectid) {
           this.$message.warning("project cann't be null");
           return
         }
@@ -201,13 +226,11 @@
         };
         this.$http.post('addClockRecord', obj).then(res => {
           if (res.status) {
-            this.projectid = null
-            this.$message.success('operate success!')
+            this.$message.success('operate success!');
+            this.tableForm.time = [new Date(Utils.getTodayDate()), new Date()];
+            this.getClockRecordList()
           }
-          this.tableForm = {
-            time: [new Date(Utils.getTodayDate()), new Date()]
-          };
-          this.getClockRecordList()
+
         })
       }
     }
