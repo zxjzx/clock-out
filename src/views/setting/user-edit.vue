@@ -17,7 +17,7 @@
             <el-input v-model="user.nickname" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="Role">
-            <el-input v-model="user.role" autocomplete="off"></el-input>
+            <el-input v-model="user.role" autocomplete="off" :disabled="isDisable"></el-input>
           </el-form-item>
 
           <el-form-item>
@@ -35,32 +35,33 @@
 
   export default {
     name: 'user-edit',
-    components: { ProjectSelect },
-    data () {
+    components: {ProjectSelect},
+    data() {
       return {
         labelPosition: 'right',
         user: {},
+        isDisable: this.$store.state.userinfo.role !== 'admin'
       }
     },
-    created () {
+    created() {
       this.getUserById()
     },
     methods: {
-      getUserById () {
+      getUserById() {
         this.$http.post('getUserInfo/' + this.$route.params.id).then(res => {
           console.log(res)
           this.user = JSON.parse(JSON.stringify(res.data[0]))
         })
       },
-      returnPage () {
+      returnPage() {
         this.$router.back()
       },
-      onSubmit () {
-        let { username, password, nickname, role, projectId } = this.user
+      onSubmit() {
+        let {username, password, nickname, role, projectId} = this.user
         let obj = {
           id: this.$route.params.id,
           projectId: projectId,
-          password: password?md5(password):null,
+          password: password ? md5(password) : null,
           username: username,
           nickname: nickname,
           role: role
@@ -78,7 +79,7 @@
           }
         })
       },
-      onCancel () {
+      onCancel() {
         this.user = {}
       }
     }

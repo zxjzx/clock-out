@@ -51,7 +51,7 @@ const router = new Router({
             {
               path: 'project-setting',
               name: 'project-setting',
-              meta: {title: 'project', icon: 'el-icon-goods'},
+              meta: {title: 'project', icon: 'el-icon-goods', role: 'admin'},
               component: () => import(/* webpackChunkName: "about" */ '../views/setting/project-setting')
             },
             {
@@ -66,7 +66,7 @@ const router = new Router({
             {
               path: 'user-add-setting',
               name: 'user-add-setting',
-              meta: {title: 'add user'},
+              meta: {title: 'add user', role: 'admin'},
               hidden: true,
               component: () => import(/* webpackChunkName: "about" */ '../views/setting/user-add')
             },

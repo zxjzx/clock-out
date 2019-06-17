@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button type="primary" class="m-b-20" icon="el-icon-circle-plus-outline" @click.native="toAddUser">
+    <el-button type="primary" class="m-b-20" icon="el-icon-circle-plus-outline" @click.native="toAddUser" :disabled="isDisable">
       Add
     </el-button>
     <el-row>
@@ -28,11 +28,13 @@
 
           <el-table-column label="Operate">
             <template slot-scope="scope">
-              <el-button type="primary" @click.native.prevent="toEditUser(scope.row)">Edit</el-button>
-              <el-button
-                @click.native.prevent="deleteRow(scope.row)"
-                type="danger"
-                size="small">
+              <el-button v-if="!isDisable || scope.row.id===userinfo.id" type="primary" @click.native.prevent="toEditUser(scope.row)">
+                Edit
+              </el-button>
+              <el-button v-if="!isDisable"
+                         @click.native.prevent="deleteRow(scope.row)"
+                         type="danger"
+                         size="small">
                 Delete
               </el-button>
             </template>
@@ -48,11 +50,14 @@
     name: 'user-setting',
     data() {
       return {
-        userList: []
+        userList: [],
+        userinfo: this.$store.state.userinfo,
+        isDisable: this.$store.state.userinfo.role !== 'admin'
       }
     },
     created() {
-      this.getUserList()
+      this.getUserList();
+      console.log(this.userinfo)
     },
     methods: {
       //删除某一行

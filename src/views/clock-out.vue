@@ -3,7 +3,7 @@
     <el-row>
       <el-col :span="12">
         <el-form :label-position="labelPosition" label-suffix=" :" label-width="160px" :inline="true">
-          <el-form-item label="Project Name">
+          <el-form-item label="Project Name" required>
             <project-select :value.sync="projectid"/>
           </el-form-item>
           <el-form-item>
@@ -124,11 +124,10 @@
       },
       reportRow(item) {
         let h = this.$createElement;
-        let user = this.$store.state.userinfo;
         this.$prompt(
           h('p', null, [
             h('span', null, 'Are you sure report '),
-            h('strong', {style: 'color: #409EFF'}, ` ${user.username} ?`),
+            h('strong', {style: 'color: #409EFF'}, ` ${item.username} ?`),
           ]),
           'title', {
             confirmButtonText: 'Confirm',
@@ -188,7 +187,10 @@
       },
       //打卡
       onSubmit() {
-
+        if(!this.projectid){
+          this.$message.warning("project cann't be null");
+          return
+        }
         //获取当前标准时间
         let nowTime = JSON.stringify(this.$timeFormat(new Date()))
         let obj = {
