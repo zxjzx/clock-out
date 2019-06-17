@@ -135,8 +135,10 @@
         this.$confirm('Confirm Delete Clock Out Record ?')
           .then(() => {
             let obj = {id: item.id};
+            this.$loading();
             this.$http.post('deleteReport', obj).then(res => {
               if (res.status) {
+                this.$loading().close();
                 this.$message.success('operate success!');
                 this.tableForm.time = [new Date(Utils.getTodayDate()), new Date()]
                 this.getClockRecordList()
@@ -165,8 +167,10 @@
             content: JSON.stringify(value),
             created: JSON.stringify(this.$timeFormat(new Date()))
           };
+          this.$loading();
           this.$http.post('reportSome', obj).then(res => {
             if (res.status) {
+              this.$loading().close();
               this.$message.success('operate success!')
             }
           })
@@ -191,6 +195,7 @@
         this.getClockRecordList()
       },
       getClockRecordList() {
+        this.$loading();
         let obj = {
           currentPage: this.page.currentPage,
           pageSize: this.page.pageSize,
@@ -204,7 +209,8 @@
             item.createdFormat = this.$timeFormat(new Date(item.created))
             item.outtimeFormat = this.$timeFormat(new Date(item.created))
             return item
-          })
+          });
+          this.$loading().close();
 
           this.page.total = res.data.total
           this.clockOutList = list
@@ -216,6 +222,8 @@
           this.$message.warning("project cann't be null");
           return
         }
+        ;
+        this.$loading();
         //获取当前标准时间
         let nowTime = JSON.stringify(this.$timeFormat(new Date()))
         let obj = {
@@ -226,6 +234,7 @@
         };
         this.$http.post('addClockRecord', obj).then(res => {
           if (res.status) {
+            this.$loading().close();
             this.$message.success('operate success!');
             this.tableForm.time = [new Date(Utils.getTodayDate()), new Date()];
             this.getClockRecordList()
