@@ -131,7 +131,6 @@
         })
       },
       handleLogin() {
-        this.$loading();
         let obj = JSON.parse(JSON.stringify(this.loginForm));
         obj.password = MD5(obj.password);
         this.loading = true;
@@ -145,7 +144,6 @@
             Cookies.set(TokenKey, username, {expires: 0.1});
             this.$message.success('login success');
             //获取用户信息存储到全局变量中
-            this.$loading().close();
             this.$store.dispatch('getUserInfo', id).then(res => {
               this.$router.replace('/main/clock-out');
             });

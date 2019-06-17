@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-loading="loading">
     <el-row>
       <el-col :span="12">
         <el-form :label-position="labelPosition" label-suffix=" :" label-width="160px" :inline="true">
@@ -113,7 +113,7 @@
         projectid: this.$store.state.userinfo.projectId || null,
         labelPosition: 'right',
         clockOutList: [],
-
+        loading: false,
         page: {
           currentPage: 1,
           pageSize: 20,
@@ -135,10 +135,10 @@
         this.$confirm('Confirm Delete Clock Out Record ?')
           .then(() => {
             let obj = {id: item.id};
-            this.$loading();
+            this.loading = true;
             this.$http.post('deleteReport', obj).then(res => {
               if (res.status) {
-                this.$loading().close();
+                this.loading = false;
                 this.$message.success('operate success!');
                 this.tableForm.time = [new Date(Utils.getTodayDate()), new Date()]
                 this.getClockRecordList()
@@ -162,15 +162,15 @@
             inputPlaceholder: 'Report reason'
           }).then(({value}) => {
           let obj = {
-            reporterid: user.id,
+            reporterid: this.userinfo.id,
             outid: item.userid,
-            content: JSON.stringify(value),
+            content: value ? JSON.stringify(value) : null,
             created: JSON.stringify(this.$timeFormat(new Date()))
           };
-          this.$loading();
+          this.loading = true;
           this.$http.post('reportSome', obj).then(res => {
             if (res.status) {
-              this.$loading().close();
+              this.loading = false;
               this.$message.success('operate success!')
             }
           })
@@ -195,7 +195,7 @@
         this.getClockRecordList()
       },
       getClockRecordList() {
-        this.$loading();
+        this.loading = true;
         let obj = {
           currentPage: this.page.currentPage,
           pageSize: this.page.pageSize,
@@ -210,7 +210,7 @@
             item.outtimeFormat = this.$timeFormat(new Date(item.created))
             return item
           });
-          this.$loading().close();
+          this.loading = false;
 
           this.page.total = res.data.total
           this.clockOutList = list
@@ -223,7 +223,7 @@
           return
         }
         ;
-        this.$loading();
+        this.loading = true;
         //获取当前标准时间
         let nowTime = JSON.stringify(this.$timeFormat(new Date()))
         let obj = {
@@ -234,7 +234,7 @@
         };
         this.$http.post('addClockRecord', obj).then(res => {
           if (res.status) {
-            this.$loading().close();
+            this.loading = false;
             this.$message.success('operate success!');
             this.tableForm.time = [new Date(Utils.getTodayDate()), new Date()];
             this.getClockRecordList()
