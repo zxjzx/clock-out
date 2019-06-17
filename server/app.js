@@ -1,5 +1,5 @@
 const http = require('http')
-const hostname = 'localhost'
+const hostname = '0.0.0.0'
 const port = 3000
 const express = require('express')
 const app = express()
