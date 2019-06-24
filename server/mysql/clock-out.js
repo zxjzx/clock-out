@@ -1,34 +1,60 @@
 const express = require('express')
 const router = express.Router()
 const db = require('./db.js')
+const Utils = require('../utils/index')
 router.use('/addClockRecord', (req, res) => {
-  let data = req.body
-  let sql = 'INSERT INTO clockout_record (userid,projectid,outtime,created) VALUES (' + data.userid + ',' + data.projectid + ',' + data.create + ',' + data.outtime + ')'
-  db.query(sql, (err, rows) => {
+  let data = req.body;
+  let beginTime = Utils.getTodayBeginTime();
+  let endTime = Utils.getTodayEndTime();
+  let countSql = `SELECT COUNT(*) as total
+                FROM clockout_record c
+                WHERE c.created >= ${beginTime} and c.created <= ${endTime}
+                and c.userid = ${data.userid} and c.projectid = ${data.projectid}`;
+
+  db.query(countSql, (err, rows) => {
     if (err) {
-      res.send(err)
+      res.send(err);
+      return
     } else {
-      let result = {
-        code: 0,
-        message: 'OK',
-        data: rows,
-        status: true
+      if (rows[0].total >= 1) {
+        let result = {
+          code: 0,
+          message: 'OK',
+          data: 'Ths project you can only clock out once a day.',
+          status: false
+        };
+        res.send(result);
+        return;
+      } else {
+        let sql = 'INSERT INTO clockout_record (userid,projectid,outtime,created) VALUES (' + data.userid + ',' + data.projectid + ',' + data.create + ',' + data.outtime + ')'
+        db.query(sql, (err, rows) => {
+          if (err) {
+            res.send(err);
+          } else {
+            let result = {
+              code: 0,
+              message: 'OK',
+              data: rows,
+              status: true
+            }
+            res.send(result)
+          }
+        })
       }
-      res.send(result)
     }
-  })
+  });
 })
 
 router.use('/getClockRecordList', (req, res) => {
-  let currentPage = req.body.currentPage
-  let pageSize = req.body.pageSize
-  let startSize = (currentPage - 1) * pageSize
-  let projectId = req.body.projectId
-  let userId = req.body.userId
-  let startTime = req.body.startTime
-  let endTime = req.body.endTime
+  let currentPage = req.body.currentPage;
+  let pageSize = req.body.pageSize;
+  let startSize = (currentPage - 1) * pageSize;
+  let projectId = req.body.projectId;
+  let userId = req.body.userId;
+  let startTime = req.body.startTime;
+  let endTime = req.body.endTime;
 
-  let projectSql = 'where 1=1'
+  let projectSql = 'where 1=1';
   if (projectId) {
     projectSql += ' and a.projectid = ' + projectId
   }

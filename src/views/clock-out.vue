@@ -140,7 +140,7 @@
               if (res.status) {
                 this.loading = false;
                 this.$message.success('operate success!');
-                this.tableForm.time = [new Date(Utils.getTodayDate()), new Date()]
+                // this.tableForm.time = [new Date(Utils.getTodayDate()), new Date()]
                 this.getClockRecordList()
               }
             })
@@ -221,8 +221,7 @@
         if (!this.projectid) {
           this.$message.warning("project cann't be null");
           return
-        }
-        ;
+        };
         this.loading = true;
         //获取当前标准时间
         let nowTime = JSON.stringify(this.$timeFormat(new Date()))
@@ -233,13 +232,17 @@
           userid: this.$store.state.userinfo.id
         };
         this.$http.post('addClockRecord', obj).then(res => {
+          this.loading = false;
           if (res.status) {
-            this.loading = false;
             this.$message.success('operate success!');
             this.tableForm.time = [new Date(Utils.getTodayDate()), new Date()];
             this.getClockRecordList()
+          }else{
+            this.$message.error(res.data)
           }
-
+        },error=>{
+          this.loading = false;
+          this.$message.error(error)
         })
       }
     }
