@@ -32,13 +32,6 @@ app.use('/', setting)
 app.use('/', clockOut)
 app.use('/', tipOff);
 
-app.get('/', function (req, res) {
-  res.send(403)
-});
-app.post('/', function (req, res) {
-  res.send(403)
-});
-
 const server = http.createServer(app)
 
 server.listen(port, hostname, () => {
