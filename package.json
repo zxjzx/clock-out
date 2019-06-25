@@ -8,7 +8,8 @@
     "lint": "vue-cli-service lint",
     "pm2-app": "pm2 start ./server/app.js",
     "app": "node ./server/app.js",
-    "run-pro": "vue-cli-service serve && node ./server/app.js"
+    "deploy-to-dev": "vue-cli-service serve && node ./server/app.js",
+    "deploy-to-pro": "vue-cli-service serve && pm2 start ./server/app.js"
   },
   "dependencies": {
     "axios": "^0.19.0",
