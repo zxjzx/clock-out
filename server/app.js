@@ -16,10 +16,10 @@ const user = require('./mysql/user')
 const setting = require('./mysql/setting')
 const clockOut = require('./mysql/clock-out')
 const tipOff = require('./mysql/tip-off')
-app.use('/', user)
-app.use('/', setting)
-app.use('/', clockOut)
-app.use('/', tipOff);
+app.use('/api', user)
+app.use('/api', setting)
+app.use('/api', clockOut)
+app.use('/api', tipOff);
 
 const server = http.createServer(app)
 
