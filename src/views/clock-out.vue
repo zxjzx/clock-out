@@ -69,7 +69,7 @@
               Report
             </el-button>
             <el-button
-              v-if="isAdmin || scope.row.userid===userinfo.id"
+              v-if="isAdmin"
               @click.native.prevent="deleteReport(scope.row)"
               type="danger"
               size="small">

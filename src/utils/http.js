@@ -1,9 +1,9 @@
 import axios from 'axios'
 
-// axios.defaults.baseURL = 'http://119.23.237.176:4000'
-// axios.defaults.baseURL = 'http://47.244.244.87:4000';//本人数据库
-// axios.defaults.baseURL = 'http://localhost:4000'
-// Set config defaults when creating the instance
+//dev
+// axios.defaults.baseURL = '/api/api';
+
+//pro
 axios.defaults.baseURL = '/api';
 
 export default {
