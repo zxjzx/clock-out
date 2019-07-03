@@ -16,6 +16,8 @@
       </div>
     </div>
 
+    <iframe scrolling="no" src="https://tianqiapi.com/api.php?style=tx&skin=pitaya" frameborder="0" width="400" height="24" allowtransparency="true"></iframe>
+
     <div class="log-out">
       <el-tag class="m-r-10">{{$store.state.userinfo.username}}</el-tag>
       <el-tooltip class="item" @click.native="logout" effect="dark" content="Log Out" placement="bottom">
@@ -41,11 +43,19 @@
       }
     },
     created() {
-      this.getLevelList()
+      this.getLevelList();
+      this.getWeatherList();
     },
     mounted() {
     },
     methods: {
+      getWeatherList(){
+        fetch('https://www.tianqiapi.com/api/').then(res=>{
+          return res.json();
+        }).then(res=>{
+          console.log(res);
+        })
+      },
       getLevelList() {
         let matched = this.$route.matched.filter(item => item.meta);
         this.levelList = matched
