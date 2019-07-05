@@ -3,7 +3,7 @@ var connection = mysql.createPool({
   host: 'localhost', //你的数据库地址
   user: 'root',
   password: '123456',
-  database: 'imscodb',
+  database: 'visitor',
   multipleStatements: true
 })
 
