@@ -3,6 +3,18 @@
     <el-button icon="el-icon-back" type="primary" class="m-b-20" @click.native.prevent="returnPage">Return</el-button>
     <el-row>
       <el-col :span="12">
+
+        <el-upload
+          class="upload-demo"
+          action="https://jsonplaceholder.typicode.com/posts/"
+          :on-preview="handlePreview"
+          :on-remove="handleRemove"
+          :file-list="fileList"
+          list-type="picture">
+          <el-button size="small" type="primary">点击上传</el-button>
+          <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+        </el-upload>
+
         <el-form :label-position="labelPosition" label-width="160px" :model="user">
           <el-form-item label="Project Name">
             <project-select :value.sync="user.projectId"/>
@@ -38,6 +50,8 @@
     components: {ProjectSelect},
     data() {
       return {
+        fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],
+
         labelPosition: 'right',
         user: {},
         isDisable: this.$store.state.userinfo.role !== 'admin'
@@ -47,6 +61,13 @@
       this.getUserById()
     },
     methods: {
+      handleRemove(file, fileList) {
+        console.log(file, fileList);
+      },
+      handlePreview(file) {
+        console.log(file);
+      },
+
       getUserById() {
         this.$http.post('getUserInfo/' + this.$route.params.id).then(res => {
           console.log(res)

@@ -77,6 +77,14 @@ const router = new Router({
               hidden: true,
               component: () => import(/* webpackChunkName: "about" */ '../views/setting/user-edit')
             },
+            {
+              path: 'echarts-setting',
+              name: 'echarts-setting',
+              meta: {title: 'project', icon: 'el-icon-goods', role: 'develop'},
+              component:function (resolve) {
+                require(['../views/setting/echarts-setting'],resolve)
+              }
+            },
           ]
         },
       ]

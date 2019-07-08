@@ -1,13 +1,10 @@
 import axios from 'axios'
 
-//dev
-// axios.defaults.baseURL = '/api/api';
-
-//pro
-axios.defaults.baseURL = '/api';
+let api = process.env.NODE_ENV === 'production' ? '/api' : '/api/api';
+axios.defaults.baseURL = api;
 
 export default {
-  get (url, param) {
+  get(url, param) {
     return new Promise((resolve, reject) => {
       axios.get(url, param).then(response => {
         resolve(response.data)
@@ -19,7 +16,7 @@ export default {
       })
     })
   },
-  post (url, param) {
+  post(url, param) {
     return new Promise((resolve, reject) => {
       axios.post(url, param).then(response => {
         resolve(response.data)
