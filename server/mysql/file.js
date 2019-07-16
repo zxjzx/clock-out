@@ -2,8 +2,8 @@ const express = require('express')
 const router = express.Router()
 const db = require('./db.js')
 const Tools = require('../utils/index');
-const app = express()
 const multer = require('multer');//upload
+const fs = require('fs')
 
 
 //设置上传地址
@@ -36,6 +36,7 @@ router.post('/upload', upload.single('logo'), (req, res, next)=> {
   });
 });
 
+//查看所有文件-图片
 router.use('/getFileList',(req,res)=>{
   let sql = `SELECT * FROM file`;
   db.query(sql,(err,rows)=>{
@@ -50,6 +51,27 @@ router.use('/getFileList',(req,res)=>{
       }
       res.send(result);
     }
+  })
+});
+
+router.use('/download',(req,res,next)=>{
+  let file = `${req.body.path}`;
+  // let file = `upload/${req.params.filename}`;
+  res.download(file);
+})
+
+router.use('/deleteFile',(req,res,next)=>{
+  //dev
+  // let file = `upload/${req.body.filename}`;
+
+  //pro
+  let file = req.body.path;
+
+  fs.unlinkSync(file);
+  res.json({
+    code: 0,
+    data: false,
+    msg: `delete id ${req.body.filename} success`
   })
 })
 
