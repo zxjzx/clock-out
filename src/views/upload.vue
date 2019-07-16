@@ -1,11 +1,14 @@
 <template>
   <div>
 
-    <el-button @click="getAllFile">获取所有的图片</el-button>
+    <el-button @click="getAllFile" type="warning">获取所有的图片</el-button>
 
     <div class="demo-image">
       <div class="block" v-for="fit in imgList" :key="fit.id">
-        <span class="demonstration">{{ fit.id }}</span>
+        <span class="demonstration">type:{{ fit.type }},size:{{Math.floor(fit.size/1024)}}k</span>
+        <span class="operation" @click="download(fit)">download</span>
+        <span class="operation" @click="deleteFile(fit)" type="danger">delete</span>
+        <br>
         <el-image
           style="width: 100px; height: 100px"
           :src="fit.url"
@@ -13,7 +16,9 @@
       </div>
     </div>
 
-    <h2>element upload online</h2>
+
+    <hr>
+    <h2>Element upload online</h2>
 
     <el-upload
       class="upload-demo"
@@ -25,6 +30,8 @@
       <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
       <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
     </el-upload>
+
+    <hr>
 
     <h2>线上环境上传并预览</h2>
     <el-upload
@@ -38,7 +45,6 @@
       <el-button size="small" type="primary">点击上传</el-button>
       <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
     </el-upload>
-
 
 
     <br>
@@ -63,17 +69,23 @@
     name: "upload",
     data() {
       return {
-        file:'',
-        fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],
-        imgList:[],
+        file: '',
+        fileList: [{
+          name: 'food.jpeg',
+          url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+        }, {
+          name: 'food2.jpeg',
+          url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+        }],
+        imgList: [],
       };
     },
-    methods:{
-      getAllFile(){
-        this.$http.get('getFileList').then(res=>{
+    methods: {
+      getAllFile() {
+        this.$http.get('getFileList').then(res => {
           console.log(res);
-          let list = res.data.map(item=>{
-            item.url = 'https://47.244.244.87:8088'+item.path
+          let list = res.data.map(item => {
+            item.url = 'https://47.244.244.87:8088' + item.path
           })
           this.imgList = res.data;
           console.log(this.imgList)
@@ -85,17 +97,55 @@
       handlePreview(file) {
         console.log(file);
       },
-
-      handleRemove(file, fileList) {
-        console.log(file, fileList);
+      download(fit) {
+        console.log(fit);
+        let obj = {
+          filename: fit.filename,
+          path: fit.path
+        }
+        this.$http.post('download', obj).then(res => {
+          console.log(res);
+        })
       },
-      handlePreview(file) {
-        console.log(file);
+      deleteFile(fit) {
+        let obj = {
+          filename: fit.filename,
+          path: fit.path,
+          id: fit.id,
+        }
+        this.$http.post('deleteFile', obj).then(res => {
+          this.$message.success(res.data)
+        })
       }
+
     }
   }
 </script>
 
 <style scoped>
+  .demo-image .block {
+    padding: 30px 0;
+    text-align: center;
+    border-right: 1px solid #eff2f6;
+    display: inline-block;
+    width: 20%;
+    box-sizing: border-box;
+    vertical-align: top;
+  }
 
+  .demo-image .demonstration {
+    text-align: center;
+    color: #8492a6;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .operation {
+    cursor: pointer;
+    color: red;
+  }
+
+  .operation:hover {
+    font-weight: 600;
+  }
 </style>

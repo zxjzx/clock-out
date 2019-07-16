@@ -8,7 +8,7 @@ const fs = require('fs')
 
 //设置上传地址
 const storage = multer.diskStorage({
-  destination: `upload/${Tools.getNowTimeStamp()}`,
+  destination: `/jane-file/images/${Tools.getNowTimeStamp()}`,
   filename: function (req, file, cb) {
     cb(null, file.originalname);
   }
@@ -67,11 +67,20 @@ router.use('/deleteFile',(req,res,next)=>{
   //pro
   let file = req.body.path;
 
-  fs.unlinkSync(file);
-  res.json({
-    code: 0,
-    data: false,
-    msg: `delete id ${req.body.filename} success`
+  let sql = `DELETE FROM file WHERE id = ${req.body.id}`;
+  db.query(sql,(err,rows)=>{
+    if(err){
+      req.send(err)
+    }else{
+      fs.unlinkSync(file);
+      let result = {
+        code:0,
+        message:'OK',
+        data:`delete id ${req.body.filename} success`,
+        status:true
+      };
+      res.json(result);
+    }
   })
 })
 
