@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div class="app-wrapper" :class="classObj">
       <sidebar class="sidebar-container"></sidebar>
       <div v-if="$store.state.device==='mobile'&&$store.state.opened" class="drawer-bg" @click="handleClickOutside"/>
@@ -9,7 +8,6 @@
           <header-bar/>
         </div>
         <div class="m-t-50">
-          <!--          <tags-view/>-->
           <div class="p-20">
             <router-view/>
           </div>
@@ -24,11 +22,11 @@
   import sidebar from './side-bar'
   import HeaderBar from './header-bar'
   import TagsView from './tags-view';
+  import resize from './js/resize'
 
-  const {body} = document;
-  const WIDTH = 750;
   export default {
     name: 'Main',
+    mixins:[resize],
     components: {sidebar, HeaderBar, TagsView},
     watch: {
       $route() {
@@ -39,7 +37,7 @@
       }
     },
     created() {
-      this.replaceUrl()
+      this.replaceUrl();
     },
 
     computed: {
@@ -52,39 +50,8 @@
         }
       }
     },
-    beforeMount() {
-      let flag = true;
-      window.addEventListener('resize', () => {
-        if (!flag) {
-          return
-        }
-        flag = false;
-        setTimeout(() => {
-          flag = true;
-          this.resizeHandle();
-        }, 500)
 
-      })
-    },
-    mounted() {
-      this.getWidth()
-    },
-    beforeDestroy() {
-      window.removeEventListener('resize', this.resizeHandle)
-    },
     methods: {
-      getWidth() {
-        const rect = body.getBoundingClientRect();
-        // console.log(rect.width);
-        return rect.width - 1 < WIDTH
-      },
-      resizeHandle() {
-        const isMobile = this.getWidth();
-        this.$store.commit('toggleDevice', isMobile ? 'mobile' : 'desktop')
-        if (isMobile) {
-          this.$store.commit('closeSideBar')
-        }
-      },
       handleClickOutside() {
         this.$store.commit('closeSideBar')
       },

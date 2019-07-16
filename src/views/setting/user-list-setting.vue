@@ -4,7 +4,7 @@
       Add
     </el-button>
     <el-row>
-      <el-col :span="16">
+      <el-col :span="24">
         <el-table
           :data="userList"
           style="width: 100%" border>
