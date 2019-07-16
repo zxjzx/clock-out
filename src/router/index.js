@@ -45,7 +45,7 @@ const router = new Router({
         {
           path: 'upload',
           name: 'upload',
-          meta: {title: 'upload', icon: 'el-icon-alarm-clock', role: 'admin'},
+          meta: {title: 'upload', icon: 'el-icon-upload', role: 'admin'},
           component: () => import('../views/upload')
         },
         {
