@@ -43,6 +43,12 @@ const router = new Router({
           component: () => import(/* webpackChunkName: "about" */ '../views/tipoff-record')
         },
         {
+          path: 'upload',
+          name: 'upload',
+          meta: {title: 'upload', icon: 'el-icon-alarm-clock', role: 'admin'},
+          component: () => import('../views/upload')
+        },
+        {
           path: 'setting',
           name: 'setting',
           component: Layout,
@@ -84,7 +90,7 @@ const router = new Router({
               component:function (resolve) {
                 require(['../views/setting/echarts-setting'],resolve)
               }
-            },
+            }
           ]
         },
       ]

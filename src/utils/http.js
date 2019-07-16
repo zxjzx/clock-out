@@ -17,6 +17,7 @@ export default {
     })
   },
   post(url, param) {
+    console.log("post")
     return new Promise((resolve, reject) => {
       axios.post(url, param).then(response => {
         resolve(response.data)
@@ -27,4 +28,18 @@ export default {
       })
     })
   },
+/*  upload(url,data,handle){
+    console.log("upload")
+    let instance = axios.create({
+      baseURL: api,
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    instance.post(url, data).then(res => {
+      handle(res.data);
+    }).catch(error => {
+      console.log(error);
+    })
+  }*/
 }
