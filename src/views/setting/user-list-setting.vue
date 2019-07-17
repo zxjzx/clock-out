@@ -26,6 +26,11 @@
             label="Project Name">
           </el-table-column>
 
+          <el-table-column
+            prop="role"
+            label="Role">
+          </el-table-column>
+
           <el-table-column label="Operate">
             <template slot-scope="scope">
               <el-button v-if="!isDisable || scope.row.id===userinfo.id" type="primary" @click.native.prevent="toEditUser(scope.row)">

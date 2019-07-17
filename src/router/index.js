@@ -43,12 +43,6 @@ const router = new Router({
           component: () => import(/* webpackChunkName: "about" */ '../views/tipoff-record')
         },
         {
-          path: 'upload',
-          name: 'upload',
-          meta: {title: 'upload', icon: 'el-icon-upload', role: 'admin'},
-          component: () => import('../views/upload')
-        },
-        {
           path: 'setting',
           name: 'setting',
           component: Layout,
@@ -86,11 +80,17 @@ const router = new Router({
             {
               path: 'echarts-setting',
               name: 'echarts-setting',
-              meta: {title: 'project', icon: 'el-icon-goods', role: 'develop'},
+              meta: {title: 'project', icon: 'el-icon-s-grid', role: 'develop'},
               component:function (resolve) {
                 require(['../views/setting/echarts-setting'],resolve)
               }
-            }
+            },
+            {
+              path: 'upload',
+              name: 'upload',
+              meta: {title: 'upload', icon: 'el-icon-upload', role: 'admin'},
+              component: () => import('../views/setting/upload')
+            },
           ]
         },
       ]

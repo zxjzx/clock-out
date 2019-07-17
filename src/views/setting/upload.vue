@@ -6,13 +6,14 @@
     <div class="demo-image">
       <div class="block" v-for="fit in imgList" :key="fit.id">
         <span class="demonstration">type:{{ fit.type }},size:{{Math.floor(fit.size/1024)}}k</span>
-        <span class="operation" @click="download(fit)">download</span>
-        <span class="operation" @click="deleteFile(fit)" type="danger">delete</span>
         <br>
         <el-image
           style="width: 100px; height: 100px"
           :src="fit.url"
           fit="contain"></el-image>
+        <br>
+        <span class="operation" @click="download(fit)">download</span>
+        <span class="operation" @click="deleteFile(fit)" type="danger">delete</span>
       </div>
     </div>
 
@@ -70,13 +71,7 @@
     data() {
       return {
         file: '',
-        fileList: [{
-          name: 'food.jpeg',
-          url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-        }, {
-          name: 'food2.jpeg',
-          url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-        }],
+        fileList: [],
         imgList: [],
       };
     },

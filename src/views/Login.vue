@@ -4,7 +4,7 @@
              label-position="left">
 
       <div class="title-container">
-        <h3 class="title">Clock Out System test</h3>
+        <h3 class="title">Clock Out System</h3>
       </div>
 
       <el-form-item prop="username">
