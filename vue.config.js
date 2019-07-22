@@ -11,6 +11,7 @@ module.exports = {
   lintOnSave: false,
   productionSourceMap: false,//生产环境是否生产sourceMap
   devServer: {
+    NODE_ENV:'development',
     proxy: {
       '/api': {
         target: 'http://0.0.0.0:4000',
@@ -74,5 +75,6 @@ module.exports = {
         }
       )
   },
+
 
 }

@@ -91,6 +91,12 @@ const router = new Router({
               meta: {title: 'upload', icon: 'el-icon-upload', role: 'admin'},
               component: () => import('../views/setting/upload')
             },
+            {
+              path: 'test',
+              name: 'test',
+              meta: {title: 'test', icon: 'el-icon-upload', role: 'admin'},
+              component: () => import('../views/setting/test')
+            },
           ]
         },
       ]

@@ -1,6 +1,7 @@
 <template>
   <div>
 
+    <img src="../../assets/logo.png" alt="">
     <el-button @click="getAllFile" type="warning">获取所有的图片</el-button>
 
     <div class="demo-image">
