@@ -37,3 +37,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ### 数据库设置
 ![在这里插入图片描述](https://github.com/zxjzx/upload-image/blob/master/mysql-node-database.png)
 ![在这里插入图片描述](https://github.com/zxjzx/upload-image/blob/master/mysql-node-table.png)
+
+用户名admin,密码123456
