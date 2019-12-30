@@ -205,7 +205,7 @@
           userId: this.tableForm.userId,
         }
         this.$http.post('getClockRecordList', obj).then(res => {
-          let list = res.data.result.map(item => {
+          let list = (res.data || {}).result.map(item => {
             item.createdFormat = this.$timeFormat(new Date(item.created))
             item.outtimeFormat = this.$timeFormat(new Date(item.created))
             return item

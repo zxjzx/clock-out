@@ -155,6 +155,23 @@ router.use('/getUserList', function (req, res, next) {
   })
 });
 
+router.use('/getUser',function (req, res, next) {
+  let sql = 'SELECT * FROM user';
+  db.query(sql, function (err, rows) {
+    if (err) {
+      res.send(err)
+    } else {
+      let result = {
+        code: 0,
+        message: 'OK',
+        data: rows,
+        status: true
+      }
+      res.send(result)
+    }
+  })
+})
+
 router.use('/updateUserList', function (req, res, next) {
   let sql = 'UPDATE user SET username=' + req.body.username + ',nickname=' + req.body.nickname + ',role=' + req.body.role + ',default_projectid=' + req.body.projectId + ' WHERE id = ' + req.body.id
   db.query(sql, function (err, rows) {

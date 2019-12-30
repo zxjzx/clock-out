@@ -22,6 +22,7 @@ router.use('/addProject', (req, res) => {
 
 router.use('/getProjectList',(req,res)=>{
   let sql = 'SELECT * FROM project';
+  console.log(sql)
   db.query(sql,(err,rows)=>{
     if(err){
       req.send(err)

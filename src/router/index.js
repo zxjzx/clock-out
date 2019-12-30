@@ -77,6 +77,12 @@ const router = new Router({
               hidden: true,
               component: () => import(/* webpackChunkName: "about" */ '../views/setting/user-edit')
             },
+            {
+              path: 'upload',
+              name: 'upload',
+              meta: {title: 'upload', icon: 'el-icon-upload', role: 'admin'},
+              component: () => import('../views/setting/upload')
+            },
           ]
         },
       ]
