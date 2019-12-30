@@ -81,7 +81,7 @@
         this.$http.get('getFileList').then(res => {
           console.log(res);
           let list = res.data.map(item => {
-            item.url = 'http://47.244.244.87:8088' + item.path
+            item.url = 'http://47.244.244.87:8088' + item.path.replace('/jane-file','')
             return item;
           });
 
