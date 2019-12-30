@@ -8,8 +8,8 @@ const fs = require('fs')
 
 //设置上传地址
 const storage = multer.diskStorage({
-  // destination: `/jane-file/img/${Tools.getNowTimeStamp()}`,
-  destination: `/img/`,
+  destination: `/jane-file/img/${Tools.getNowTimeStamp()}`,
+  // destination: `/img/`,
   filename: function (req, file, cb) {
     cb(null, file.originalname);
   }
@@ -20,7 +20,8 @@ let upload = multer({
 });
 
 router.post('/upload', upload.single('logo'), (req, res, next)=> {
-  let sql = `INSERT INTO file(filename,path,type,size) VALUES (${JSON.stringify(req.file.filename)},${JSON.stringify('img/'+req.file.filename)},${JSON.stringify(req.file.mimetype)},${JSON.stringify(req.file.size)})`;
+  let sql = `INSERT INTO file(filename,path,type,size) VALUES (${JSON.stringify(req.file.filename)},
+  ${JSON.stringify(req.file.path)},${JSON.stringify(req.file.mimetype)},${JSON.stringify(req.file.size)})`;
   db.query(sql,(err,rows)=>{
     if(err){
       res.send(err)
